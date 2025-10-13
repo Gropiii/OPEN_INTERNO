@@ -8,6 +8,14 @@
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #f4f4f4; color: #333; }
         .container { max-width: 95%; margin: 20px auto; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow-x: auto; }
         h1 { text-align: center; color: #d9534f; }
+        
+        /* Estilos do Menu */
+        .menu { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        .menu button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #f0f0f0; border: none; border-bottom: 3px solid transparent; margin: 0 5px; transition: all 0.2s ease-in-out; }
+        .menu button:hover { background-color: #e0e0e0; }
+        .menu button.active { color: #d9534f; border-bottom: 3px solid #d9534f; background-color: #fff; }
+
+        /* Estilos da Tabela */
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { padding: 10px 12px; border: 1px solid #ddd; text-align: center; white-space: nowrap; }
         thead th { background-color: #333; color: #fff; }
@@ -18,45 +26,84 @@
         .points { color: #d9534f; font-weight: bold; font-size: 0.9em; }
         .result { color: #555; font-size: 1em; }
         .footer { text-align: center; margin-top: 20px; font-size: 0.8em; color: #777; }
+
+        /* Lógica para mostrar/esconder tabelas */
+        .category-table { display: none; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Tabela de Classificação</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th rowspan="2">Rank</th>
-                    <th rowspan="2">Atleta</th>
-                    {% for wod in wods %}
-                    <th colspan="2" class="wod-header">{{ wod.split('_')[1].replace('WOD', '') }}</th>
-                    {% endfor %}
-                    <th rowspan="2">Total Pontos</th>
-                </tr>
-                <tr>
-                    {% for wod in wods %}
-                    <th class="sub-header">Pontos</th>
-                    <th class="sub-header">{{ wod.split('_')[2] }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for atleta in atletas %}
-                <tr>
-                    <td class="rank">{{ atleta['Rank'] | int }}</td>
-                    <td>{{ atleta['Atleta'] }}</td>
-                    
-                    {% for wod in wods %}
-                    <td class="points">{{ atleta[wod + '_Pontos'] | int }}</td>
-                    <td class="result">{{ atleta[wod] }}</td>
-                    {% endfor %}
 
-                    <td class="total-points">{{ atleta['Total Pontos'] | int }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="menu">
+            {% for category_name in categories_data %}
+            <button id="btn-{{ category_name|replace(' ', '')|lower }}" onclick="showCategory('{{ category_name|replace(' ', '')|lower }}')">{{ category_name }}</button>
+            {% endfor %}
+        </div>
+
+        {% for category_name, atletas in categories_data.items() %}
+        <div id="table-{{ category_name|replace(' ', '')|lower }}" class="category-table">
+            <h2>Categoria: {{ category_name }}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2">Rank</th>
+                        <th rowspan="2">Atleta</th>
+                        {% for wod in wods %}
+                        <th colspan="2" class="wod-header">{{ wod.split('_')[1] }}</th>
+                        {% endfor %}
+                        <th rowspan="2">Total Pontos</th>
+                    </tr>
+                    <tr>
+                        {% for wod in wods %}
+                        <th class="sub-header">Pontos</th>
+                        <th class="sub-header">{{ wod.split('_')[2] }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for atleta in atletas %}
+                    <tr>
+                        <td class="rank">{{ atleta['Rank'] | int }}</td>
+                        <td>{{ atleta['Atleta'] }}</td>
+                        {% for wod in wods %}
+                        <td class="points">{{ atleta[wod + '_Pontos'] | int }}</td>
+                        <td class="result">{{ atleta[wod] }}</td>
+                        {% endfor %}
+                        <td class="total-points">{{ atleta['Total Pontos'] | int }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+
         <p class="footer">Última atualização: {{ data_atualizacao }}</p>
     </div>
+
+    <script>
+        function showCategory(categoryName) {
+            // Esconde todas as tabelas
+            document.querySelectorAll('.category-table').forEach(table => {
+                table.style.display = 'none';
+            });
+            // Remove a classe 'active' de todos os botões
+            document.querySelectorAll('.menu button').forEach(button => {
+                button.classList.remove('active');
+            });
+            // Mostra a tabela da categoria selecionada
+            document.querySelector('#table-' + categoryName).style.display = 'block';
+            // Adiciona a classe 'active' ao botão clicado
+            document.querySelector('#btn-' + categoryName).classList.add('active');
+        }
+
+        // Ao carregar a página, clica automaticamente no primeiro botão do menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstButton = document.querySelector('.menu button');
+            if (firstButton) {
+                firstButton.click();
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
-Atleta,WOD1_FastHeavy_Tempo,WOD2_NightRun_Tempo,WOD3_HoldBreath_Distancia,WOD4_PesoFuriaB_Reps
-Fulano de Tal,07:06,26:56,153.72,161
-Ciclana Souza,07:55,25:10,180.50,150
-Beltrano Silva,06:59,28:01,140.00,198
-Joana Santos,08:15,26:55,175.25,185
-Thiago Pereira,07:05,29:30,166.90,172
+Atleta,Categoria,WOD1_FastHeavy_Tempo,WOD2_NightRun_Tempo,WOD3_HoldBreath_Distancia,WOD4_PesoFuriaB_Reps
+Fulano de Tal,Masculino,07:06,26:56,153.72,161
+Ciclana Souza,Feminino,08:30,28:10,140.50,130
+Beltrano Silva,Masculino,06:59,28:01,140.00,198
+Joana Santos,Feminino,08:15,27:55,155.25,145
+Thiago Pereira,Masculino,07:05,29:30,166.90,172
+Maria Oliveira,Feminino,08:25,28:00,150.00,148
