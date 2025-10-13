@@ -1,9 +1,12 @@
 name: Atualizar Leaderboard Automaticamente
 
-# DEPOIS: Roda SOMENTE quando você mandar
 on:
   # Permite que você rode esta ação manualmente pela aba "Actions" do GitHub
   workflow_dispatch:
+
+# ADICIONE ESTA SEÇÃO AQUI
+permissions:
+  contents: write
 
 jobs:
   build:
