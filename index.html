@@ -5,74 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard - Campeonato CrossFit</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4f4f4; color: #333; }
-        .container { max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 95%; margin: 20px auto; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow-x: auto; }
         h1 { text-align: center; color: #d9534f; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
-        th { background-color: #333; color: #fff; }
-        tr:nth-child(even) { background-color: #f2f2f2; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px 12px; border: 1px solid #ddd; text-align: center; white-space: nowrap; }
+        thead th { background-color: #333; color: #fff; }
+        .wod-header { font-size: 1.1em; }
+        .sub-header { background-color: #555 !important; font-size: 0.9em; }
+        tbody tr:nth-child(even) { background-color: #f9f9f9; }
+        .rank, .total-points { font-weight: bold; }
+        .points { color: #d9534f; font-weight: bold; font-size: 0.9em; }
+        .result { color: #555; font-size: 1em; }
         .footer { text-align: center; margin-top: 20px; font-size: 0.8em; color: #777; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Tabela de Classificação</h1>
-        <table border="1" class="dataframe table table-striped">
-  <thead>
-    <tr style="text-align: center;">
-      <th>Rank</th>
-      <th>Atleta</th>
-      <th>WOD1</th>
-      <th>WOD2</th>
-      <th>WOD3</th>
-      <th>Total Pontos</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>Beltrano Silva</td>
-      <td>2</td>
-      <td>1</td>
-      <td>1</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Fulano de Tal</td>
-      <td>1</td>
-      <td>5</td>
-      <td>3</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Ciclana Souza</td>
-      <td>3</td>
-      <td>2</td>
-      <td>4</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Joana Santos</td>
-      <td>5</td>
-      <td>4</td>
-      <td>2</td>
-      <td>11</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Thiago Pereira</td>
-      <td>4</td>
-      <td>3</td>
-      <td>5</td>
-      <td>12</td>
-    </tr>
-  </tbody>
-</table>
-        <p class="footer">Última atualização: 12/10/2025 21:20:58</p>
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2">Rank</th>
+                    <th rowspan="2">Atleta</th>
+                    
+                    <th colspan="2" class="wod-header">FastHeavy</th>
+                    
+                    <th colspan="2" class="wod-header">NightRun</th>
+                    
+                    <th colspan="2" class="wod-header">HoldBreath</th>
+                    
+                    <th colspan="2" class="wod-header">PesoFuriaB</th>
+                    
+                    <th rowspan="2">Total Pontos</th>
+                </tr>
+                <tr>
+                    
+                    <th class="sub-header">Pontos</th>
+                    <th class="sub-header">Tempo</th>
+                    
+                    <th class="sub-header">Pontos</th>
+                    <th class="sub-header">Tempo</th>
+                    
+                    <th class="sub-header">Pontos</th>
+                    <th class="sub-header">Distancia</th>
+                    
+                    <th class="sub-header">Pontos</th>
+                    <th class="sub-header">Reps</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td class="rank">1</td>
+                    <td>Ciclana Souza</td>
+                    
+                    
+                    <td class="points">4</td>
+                    <td class="result">07:55</td>
+                    
+                    <td class="points">1</td>
+                    <td class="result">25:10</td>
+                    
+                    <td class="points">1</td>
+                    <td class="result">180.5</td>
+                    
+                    <td class="points">5</td>
+                    <td class="result">150</td>
+                    
+
+                    <td class="total-points">11</td>
+                </tr>
+                
+                <tr>
+                    <td class="rank">2</td>
+                    <td>Beltrano Silva</td>
+                    
+                    
+                    <td class="points">1</td>
+                    <td class="result">06:59</td>
+                    
+                    <td class="points">4</td>
+                    <td class="result">28:01</td>
+                    
+                    <td class="points">5</td>
+                    <td class="result">140.0</td>
+                    
+                    <td class="points">1</td>
+                    <td class="result">198</td>
+                    
+
+                    <td class="total-points">11</td>
+                </tr>
+                
+                <tr>
+                    <td class="rank">3</td>
+                    <td>Joana Santos</td>
+                    
+                    
+                    <td class="points">5</td>
+                    <td class="result">08:15</td>
+                    
+                    <td class="points">2</td>
+                    <td class="result">26:55</td>
+                    
+                    <td class="points">2</td>
+                    <td class="result">175.25</td>
+                    
+                    <td class="points">2</td>
+                    <td class="result">185</td>
+                    
+
+                    <td class="total-points">11</td>
+                </tr>
+                
+                <tr>
+                    <td class="rank">4</td>
+                    <td>Thiago Pereira</td>
+                    
+                    
+                    <td class="points">2</td>
+                    <td class="result">07:05</td>
+                    
+                    <td class="points">5</td>
+                    <td class="result">29:30</td>
+                    
+                    <td class="points">3</td>
+                    <td class="result">166.9</td>
+                    
+                    <td class="points">3</td>
+                    <td class="result">172</td>
+                    
+
+                    <td class="total-points">13</td>
+                </tr>
+                
+                <tr>
+                    <td class="rank">5</td>
+                    <td>Fulano de Tal</td>
+                    
+                    
+                    <td class="points">3</td>
+                    <td class="result">07:06</td>
+                    
+                    <td class="points">3</td>
+                    <td class="result">26:56</td>
+                    
+                    <td class="points">4</td>
+                    <td class="result">153.72</td>
+                    
+                    <td class="points">4</td>
+                    <td class="result">161</td>
+                    
+
+                    <td class="total-points">14</td>
+                </tr>
+                
+            </tbody>
+        </table>
+        <p class="footer">Última atualização: 13/10/2025 11:04:34</p>
     </div>
 </body>
 </html>
