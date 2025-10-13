@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard - Campeonato CrossFit</title>
     <style>
+        /* ... (todos os estilos anteriores permanecem os mesmos) ... */
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #f4f4f4; color: #333; }
         .container { max-width: 95%; margin: 20px auto; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow-x: auto; }
         h1 { text-align: center; color: #d9534f; }
+        .menu { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        .menu button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #f0f0f0; border: none; border-bottom: 3px solid transparent; margin: 0 5px; transition: all 0.2s ease-in-out; }
+        .menu button:hover { background-color: #e0e0e0; }
+        .menu button.active { color: #d9534f; border-bottom: 3px solid #d9534f; background-color: #fff; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { padding: 10px 12px; border: 1px solid #ddd; text-align: center; white-space: nowrap; }
         thead th { background-color: #333; color: #fff; }
@@ -18,153 +23,260 @@
         .points { color: #d9534f; font-weight: bold; font-size: 0.9em; }
         .result { color: #555; font-size: 1em; }
         .footer { text-align: center; margin-top: 20px; font-size: 0.8em; color: #777; }
+        .category-table { display: none; }
+        /* NOVO ESTILO para a tag RX/Scale */
+        .wod-cat { font-size: 0.75em; color: #888; font-weight: bold; margin-left: 4px; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Tabela de Classificação</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th rowspan="2">Rank</th>
-                    <th rowspan="2">Atleta</th>
-                    
-                    <th colspan="2" class="wod-header">FastHeavy</th>
-                    
-                    <th colspan="2" class="wod-header">NightRun</th>
-                    
-                    <th colspan="2" class="wod-header">HoldBreath</th>
-                    
-                    <th colspan="2" class="wod-header">PesoFuriaB</th>
-                    
-                    <th rowspan="2">Total Pontos</th>
-                </tr>
-                <tr>
-                    
-                    <th class="sub-header">Pontos</th>
-                    <th class="sub-header">Tempo</th>
-                    
-                    <th class="sub-header">Pontos</th>
-                    <th class="sub-header">Tempo</th>
-                    
-                    <th class="sub-header">Pontos</th>
-                    <th class="sub-header">Distancia</th>
-                    
-                    <th class="sub-header">Pontos</th>
-                    <th class="sub-header">Reps</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                
-                <tr>
-                    <td class="rank">1</td>
-                    <td>Ciclana Souza</td>
-                    
-                    
-                    <td class="points">4</td>
-                    <td class="result">07:55</td>
-                    
-                    <td class="points">1</td>
-                    <td class="result">25:10</td>
-                    
-                    <td class="points">1</td>
-                    <td class="result">180.5</td>
-                    
-                    <td class="points">5</td>
-                    <td class="result">150</td>
-                    
 
-                    <td class="total-points">11</td>
-                </tr>
-                
-                <tr>
-                    <td class="rank">2</td>
-                    <td>Beltrano Silva</td>
-                    
-                    
-                    <td class="points">1</td>
-                    <td class="result">06:59</td>
-                    
-                    <td class="points">4</td>
-                    <td class="result">28:01</td>
-                    
-                    <td class="points">5</td>
-                    <td class="result">140.0</td>
-                    
-                    <td class="points">1</td>
-                    <td class="result">198</td>
-                    
+        <div class="menu">
+            
+            <button id="btn-feminino" onclick="showCategory('feminino')">Feminino</button>
+            
+            <button id="btn-masculino" onclick="showCategory('masculino')">Masculino</button>
+            
+        </div>
 
-                    <td class="total-points">11</td>
-                </tr>
-                
-                <tr>
-                    <td class="rank">3</td>
-                    <td>Joana Santos</td>
+        
+        <div id="table-feminino" class="category-table">
+            <h2>Categoria: Feminino</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2">Rank</th>
+                        <th rowspan="2">Atleta</th>
+                        
+                        <th colspan="2" class="wod-header">WOD1</th>
+                        
+                        <th colspan="2" class="wod-header">WOD2</th>
+                        
+                        <th colspan="2" class="wod-header">WOD3</th>
+                        
+                        <th rowspan="2">Total Pontos</th>
+                    </tr>
+                    <tr>
+                        
+                        <th class="sub-header">Pontos</th>
+                        <th class="sub-header">Resultado</th>
+                        
+                        <th class="sub-header">Pontos</th>
+                        <th class="sub-header">Resultado</th>
+                        
+                        <th class="sub-header">Pontos</th>
+                        <th class="sub-header">Resultado</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
                     
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>Joana Santos</td>
+                        
+                        <td class="points">3</td>
+                        <td class="result">
+                            09:15
+                            <span class="wod-cat">(Scale)</span>
+                        </td>
+                        
+                        <td class="points">1</td>
+                        <td class="result">
+                            27:55
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="points">1</td>
+                        <td class="result">
+                            155.25
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="total-points">5</td>
+                    </tr>
                     
-                    <td class="points">5</td>
-                    <td class="result">08:15</td>
+                    <tr>
+                        <td class="rank">2</td>
+                        <td>Ciclana Souza</td>
+                        
+                        <td class="points">1</td>
+                        <td class="result">
+                            08:30
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="points">3</td>
+                        <td class="result">
+                            28:10
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="points">2</td>
+                        <td class="result">
+                            140.5
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="total-points">6</td>
+                    </tr>
                     
-                    <td class="points">2</td>
-                    <td class="result">26:55</td>
+                    <tr>
+                        <td class="rank">3</td>
+                        <td>Maria Oliveira</td>
+                        
+                        <td class="points">2</td>
+                        <td class="result">
+                            09:10
+                            <span class="wod-cat">(Scale)</span>
+                        </td>
+                        
+                        <td class="points">2</td>
+                        <td class="result">
+                            28:00
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="points">3</td>
+                        <td class="result">
+                            150.0
+                            <span class="wod-cat">(Scale)</span>
+                        </td>
+                        
+                        <td class="total-points">7</td>
+                    </tr>
                     
-                    <td class="points">2</td>
-                    <td class="result">175.25</td>
+                </tbody>
+            </table>
+        </div>
+        
+        <div id="table-masculino" class="category-table">
+            <h2>Categoria: Masculino</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2">Rank</th>
+                        <th rowspan="2">Atleta</th>
+                        
+                        <th colspan="2" class="wod-header">WOD1</th>
+                        
+                        <th colspan="2" class="wod-header">WOD2</th>
+                        
+                        <th colspan="2" class="wod-header">WOD3</th>
+                        
+                        <th rowspan="2">Total Pontos</th>
+                    </tr>
+                    <tr>
+                        
+                        <th class="sub-header">Pontos</th>
+                        <th class="sub-header">Resultado</th>
+                        
+                        <th class="sub-header">Pontos</th>
+                        <th class="sub-header">Resultado</th>
+                        
+                        <th class="sub-header">Pontos</th>
+                        <th class="sub-header">Resultado</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
                     
-                    <td class="points">2</td>
-                    <td class="result">185</td>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>Fulano de Tal</td>
+                        
+                        <td class="points">2</td>
+                        <td class="result">
+                            07:06
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="points">1</td>
+                        <td class="result">
+                            26:56
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="points">2</td>
+                        <td class="result">
+                            153.72
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="total-points">5</td>
+                    </tr>
                     
+                    <tr>
+                        <td class="rank">2</td>
+                        <td>Beltrano Silva</td>
+                        
+                        <td class="points">1</td>
+                        <td class="result">
+                            06:59
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="points">2</td>
+                        <td class="result">
+                            29:01
+                            <span class="wod-cat">(Scale)</span>
+                        </td>
+                        
+                        <td class="points">3</td>
+                        <td class="result">
+                            140.0
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="total-points">6</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="rank">3</td>
+                        <td>Thiago Pereira</td>
+                        
+                        <td class="points">3</td>
+                        <td class="result">
+                            08:05
+                            <span class="wod-cat">(Scale)</span>
+                        </td>
+                        
+                        <td class="points">3</td>
+                        <td class="result">
+                            29:30
+                            <span class="wod-cat">(Scale)</span>
+                        </td>
+                        
+                        <td class="points">1</td>
+                        <td class="result">
+                            166.9
+                            <span class="wod-cat">(RX)</span>
+                        </td>
+                        
+                        <td class="total-points">7</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        
 
-                    <td class="total-points">11</td>
-                </tr>
-                
-                <tr>
-                    <td class="rank">4</td>
-                    <td>Thiago Pereira</td>
-                    
-                    
-                    <td class="points">2</td>
-                    <td class="result">07:05</td>
-                    
-                    <td class="points">5</td>
-                    <td class="result">29:30</td>
-                    
-                    <td class="points">3</td>
-                    <td class="result">166.9</td>
-                    
-                    <td class="points">3</td>
-                    <td class="result">172</td>
-                    
-
-                    <td class="total-points">13</td>
-                </tr>
-                
-                <tr>
-                    <td class="rank">5</td>
-                    <td>Fulano de Tal</td>
-                    
-                    
-                    <td class="points">3</td>
-                    <td class="result">07:06</td>
-                    
-                    <td class="points">3</td>
-                    <td class="result">26:56</td>
-                    
-                    <td class="points">4</td>
-                    <td class="result">153.72</td>
-                    
-                    <td class="points">4</td>
-                    <td class="result">161</td>
-                    
-
-                    <td class="total-points">14</td>
-                </tr>
-                
-            </tbody>
-        </table>
-        <p class="footer">Última atualização: 13/10/2025 11:04:34</p>
+        <p class="footer">Última atualização: 13/10/2025 11:17:44</p>
     </div>
+
+    <script>
+        // ... (o JavaScript permanece exatamente o mesmo) ...
+        function showCategory(categoryName) {
+            document.querySelectorAll('.category-table').forEach(table => { table.style.display = 'none'; });
+            document.querySelectorAll('.menu button').forEach(button => { button.classList.remove('active'); });
+            document.querySelector('#table-' + categoryName).style.display = 'block';
+            document.querySelector('#btn-' + categoryName).classList.add('active');
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstButton = document.querySelector('.menu button');
+            if (firstButton) { firstButton.click(); }
+        });
+    </script>
 </body>
 </html>
