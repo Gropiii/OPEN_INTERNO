@@ -27,39 +27,32 @@
             overflow-x: auto;
         }
 
-        /* --- ### INÍCIO DA MUDANÇA PRINCIPAL (CSS) ### --- */
-
-        /* O container que segura os dois logos */
         .logo-container {
             display: flex;
-            /* MODIFICADO: Esta propriedade agora empurra os logos para as extremidades da caixa */
             justify-content: space-between; 
             align-items: center;
-            /* O 'gap' foi removido pois 'space-between' já cria o maior espaço possível */
             margin-bottom: 20px;
         }
 
-        /* Estilo para cada imagem de logo individualmente */
         .logo-item {
-            /* MODIFICADO: A altura máxima foi aumentada para deixar os logos maiores. Ajuste este valor se precisar! */
-            max-height: 250px; 
+            max-height: 250px;
             max-width: 45%;
             width: auto;
             height: auto;
         }
         
-        /* ### FIM DA MUDANÇA PRINCIPAL (CSS) ### */
-
         h1 {
             text-align: center;
             color: #ff0800;
         }
 
-        /* ... (O resto do seu CSS para menu e tabela continua igual) ... */
         .menu { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
         .menu button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #f0f0f0; border: none; border-bottom: 3px solid transparent; margin: 0 5px; transition: all 0.2s ease-in-out; }
         .menu button:hover { background-color: #ffffff; }
         .menu button.active { color: #d9534f; border-bottom: 3px solid #d9534f; background-color: #fff; }
+
+        /* --- ESTILOS DA TABELA DE RESULTADOS --- */
+
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { padding: 10px 12px; border: 1px solid #ddd; text-align: center; white-space: nowrap; }
         table.dataTable th, table.dataTable td { text-align: center !important; }
@@ -67,8 +60,27 @@
         table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after { color: #fff !important; }
         .wod-header { font-size: 1.1em; }
         .sub-header { background-color: #f16666 !important; font-size: 0.9em; }
-        tbody tr:nth-child(even) { background-color: #2e2e2e; }
-        tbody tr { color: #ffffff; }
+        
+        /* ### INÍCIO DA CORREÇÃO DEFINITIVA DO EFEITO ZEBRA ### */
+
+        /* A DataTables adiciona classes 'odd' e 'even' às linhas da tabela. */
+        /* Vamos estilizar essas classes diretamente para garantir que o nosso estilo vença. */
+        /* Esta abordagem é mais específica e robusta que o 'nth-child'. */
+
+        /* Estilo para as linhas ÍMPARES (que a DataTables marca com a classe 'odd') */
+        table.dataTable tbody tr.odd {
+            background-color: #000000 !important; /* Fundo preto */
+            color: #ffffff !important; /* Texto branco */
+        }
+
+        /* Estilo para as linhas PARES (que a DataTables marca com a classe 'even') */
+        table.dataTable tbody tr.even {
+            background-color: #2e2d2d !important; /* Fundo cinza escuro */
+            color: #ffffff !important; /* Texto branco */
+        }
+        
+        /* ### FIM DA CORREÇÃO DEFINITIVA DO EFEITO ZEBRA ### */
+
         .rank, .total-points { font-weight: bold; }
         .points { color: #ffffff; font-weight: bold; font-size: 0.9em; }
         .result { color: #ffffff; font-size: 1em; }
@@ -81,19 +93,8 @@
         @media only screen and (max-width: 768px) {
             body { font-size: 14px; }
             .container { padding: 10px; margin: 10px auto; }
-            
-            /* Em telas pequenas, os logos voltam a ficar centralizados e empilhados */
-            .logo-container {
-                flex-direction: column;
-                justify-content: center; /* Centraliza verticalmente quando empilhado */
-                gap: 15px;
-            }
-
-            /* MODIFICADO: A altura máxima no mobile também foi aumentada proporcionalmente */
-            .logo-item {
-                max-height: 100px;
-            }
-            
+            .logo-container { flex-direction: column; justify-content: center; gap: 15px; }
+            .logo-item { max-height: 100px; }
             h1 { font-size: 1.8em; }
             .menu button { padding: 8px 10px; font-size: 14px; margin: 0 2px; }
             th, td { padding: 6px 5px; font-size: 0.85em; }
@@ -128,24 +129,29 @@
                             <th rowspan="2">Rank</th>
                             <th rowspan="2">Atleta</th>
                             
-                                <th colspan="2" class="wod-header">PR CLEAN</th>
+                                <th colspan="2" class="wod-header">Open 25.1</th>
                             
-                                <th colspan="2" class="wod-header">FRAN</th>
+                                <th colspan="2" class="wod-header">Open 25.2</th>
                             
-                                <th colspan="2" class="wod-header">MAX BMU</th>
+                                <th colspan="2" class="wod-header">Open 25.3</th>
+                            
+                                <th colspan="2" class="wod-header">Open 25.4</th>
                             
                             <th rowspan="2">Total Pontos</th>
                         </tr>
                         <tr>
                             
                                 <th class="sub-header">Pontos</th>
-                                <th class="sub-header">Peso</th>
+                                <th class="sub-header">Tempo</th>
                             
                                 <th class="sub-header">Pontos</th>
                                 <th class="sub-header">Tempo</th>
                             
                                 <th class="sub-header">Pontos</th>
-                                <th class="sub-header">Reps</th>
+                                <th class="sub-header">Tempo</th>
+                            
+                                <th class="sub-header">Pontos</th>
+                                <th class="sub-header">Tempo</th>
                             
                         </tr>
                     </thead>
@@ -155,100 +161,124 @@
                             <td class="rank">1</td>
                             <td>Carol Ussier</td>
                             
-                                <td class="points">2</td>
+                                <td class="points">1</td>
                                 <td class="result">
-                                    65.0 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
-                                    06:35 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                                <td class="points">2</td>
+                                <td class="points">1</td>
                                 <td class="result">
-                                    8 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">5</td>
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                            <td class="total-points">4</td>
                         </tr>
                         
                         <tr>
                             <td class="rank">2</td>
-                            <td>Samara</td>
+                            <td>Má</td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
-                                    70.0 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                                <td class="points">2</td>
+                                <td class="points">1</td>
                                 <td class="result">
-                                    08:27 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                                <td class="points">4</td>
+                                <td class="points">1</td>
                                 <td class="result">
-                                    6 
-                                    <span class="wod-cat">(Scale)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">7</td>
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                            <td class="total-points">4</td>
                         </tr>
                         
                         <tr>
                             <td class="rank">3</td>
-                            <td>Má</td>
-                            
-                                <td class="points">3</td>
-                                <td class="result">
-                                    62.5 
-                                    <span class="wod-cat">(RX)</span>
-                                </td>
-                            
-                                <td class="points">2</td>
-                                <td class="result">
-                                    08:27 
-                                    <span class="wod-cat">(RX)</span>
-                                </td>
-                            
-                                <td class="points">3</td>
-                                <td class="result">
-                                    9 
-                                    <span class="wod-cat">(Scale)</span>
-                                </td>
-                            
-                            <td class="total-points">8</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank">4</td>
                             <td>Ana Bia</td>
                             
-                                <td class="points">4</td>
+                                <td class="points">1</td>
                                 <td class="result">
-                                    60.0 
-                                    <span class="wod-cat">(RX)</span>
-                                </td>
-                            
-                                <td class="points">4</td>
-                                <td class="result">
-                                    07:06 
-                                    <span class="wod-cat">(Scale)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
-                                    10 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                            <td class="total-points">4</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="rank">4</td>
+                            <td>Samara</td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                            <td class="total-points">4</td>
                         </tr>
                          
                     </tbody>
@@ -263,24 +293,29 @@
                             <th rowspan="2">Rank</th>
                             <th rowspan="2">Atleta</th>
                             
-                                <th colspan="2" class="wod-header">PR CLEAN</th>
+                                <th colspan="2" class="wod-header">Open 25.1</th>
                             
-                                <th colspan="2" class="wod-header">FRAN</th>
+                                <th colspan="2" class="wod-header">Open 25.2</th>
                             
-                                <th colspan="2" class="wod-header">MAX BMU</th>
+                                <th colspan="2" class="wod-header">Open 25.3</th>
+                            
+                                <th colspan="2" class="wod-header">Open 25.4</th>
                             
                             <th rowspan="2">Total Pontos</th>
                         </tr>
                         <tr>
                             
                                 <th class="sub-header">Pontos</th>
-                                <th class="sub-header">Peso</th>
+                                <th class="sub-header">Tempo</th>
                             
                                 <th class="sub-header">Pontos</th>
                                 <th class="sub-header">Tempo</th>
                             
                                 <th class="sub-header">Pontos</th>
-                                <th class="sub-header">Reps</th>
+                                <th class="sub-header">Tempo</th>
+                            
+                                <th class="sub-header">Pontos</th>
+                                <th class="sub-header">Tempo</th>
                             
                         </tr>
                     </thead>
@@ -288,149 +323,179 @@
                         
                         <tr>
                             <td class="rank">1</td>
-                            <td>Thi</td>
+                            <td>Andrezão</td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
-                                    107.5 
+                                    10:08 
                                     <span class="wod-cat">(RX)</span>
-                                </td>
-                            
-                                <td class="points">5</td>
-                                <td class="result">
-                                    07:08 
-                                    <span class="wod-cat">(Scale)</span>
                                 </td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
-                                    20 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">7</td>
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                            <td class="total-points">4</td>
                         </tr>
                         
                         <tr>
                             <td class="rank">2</td>
                             <td>Paulinho</td>
                             
-                                <td class="points">3</td>
-                                <td class="result">
-                                    100.0 
-                                    <span class="wod-cat">(RX)</span>
-                                </td>
-                            
                                 <td class="points">2</td>
                                 <td class="result">
-                                    08:52 
+                                    10:10 
                                     <span class="wod-cat">(RX)</span>
                                 </td>
                             
-                                <td class="points">2</td>
+                                <td class="points">1</td>
                                 <td class="result">
-                                    10 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">7</td>
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                            <td class="total-points">5</td>
                         </tr>
                         
                         <tr>
                             <td class="rank">3</td>
-                            <td>Bydão</td>
-                            
-                                <td class="points">4</td>
-                                <td class="result">
-                                    95.0 
-                                    <span class="wod-cat">(RX)</span>
-                                </td>
-                            
-                                <td class="points">2</td>
-                                <td class="result">
-                                    08:52 
-                                    <span class="wod-cat">(RX)</span>
-                                </td>
+                            <td>Thi</td>
                             
                                 <td class="points">3</td>
                                 <td class="result">
-                                    8 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                            <td class="total-points">6</td>
                         </tr>
                         
                         <tr>
                             <td class="rank">4</td>
                             <td>Pedrinho</td>
                             
-                                <td class="points">5</td>
+                                <td class="points">3</td>
                                 <td class="result">
-                                    92.5 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
-                                    08:32 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                                <td class="points">4</td>
+                                <td class="points">1</td>
                                 <td class="result">
-                                    18 
-                                    <span class="wod-cat">(Scale)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">10</td>
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                            <td class="total-points">6</td>
                         </tr>
                         
                         <tr>
                             <td class="rank">5</td>
-                            <td>Andrezão</td>
+                            <td>Bydão</td>
                             
-                                <td class="points">2</td>
+                                <td class="points">3</td>
                                 <td class="result">
-                                    105.0 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                                <td class="points">4</td>
+                                <td class="points">1</td>
                                 <td class="result">
-                                    09:35 
-                                    <span class="wod-cat">(RX)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                                <td class="points">5</td>
+                                <td class="points">1</td>
                                 <td class="result">
-                                    15 
-                                    <span class="wod-cat">(Scale)</span>
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">11</td>
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                            <td class="total-points">6</td>
                         </tr>
                          
                     </tbody>
                 </table>
             </div>
          
-<<<<<<< HEAD
-        <p class="footer">Última atualização: 13/10/2025 14:00:39</p>
-=======
-        <p class="footer">Última atualização: 13/10/2025 13:48:18</p>
->>>>>>> 2c6357184b12abcf29dbe4c13e9140620fbba49c
+        <p class="footer">Última atualização: 13/10/2025 14:44:38</p>
     </div>
 
     <script>
-        // O JavaScript para as abas e DataTables não precisa de nenhuma alteração.
+        // Função para mostrar a categoria selecionada e inicializar a DataTables
         function showCategory(categoryName) {
             document.querySelectorAll('.category-table').forEach(tableDiv => { tableDiv.style.display = 'none'; });
             document.querySelectorAll('.menu button').forEach(button => { button.classList.remove('active'); });
+            
             const activeTableContainer = document.querySelector('#table-container-' + categoryName);
             activeTableContainer.style.display = 'block';
+            
             document.querySelector('#btn-' + categoryName).classList.add('active');
+
             const tableId = '#leaderboard-' + categoryName;
+            
             if (!$.fn.dataTable.isDataTable(tableId)) {
                 $(tableId).DataTable({
                     "paging": false,
@@ -440,6 +505,8 @@
                 });
             }
         }
+
+        // Roda automaticamente assim que a página termina de carregar
         document.addEventListener('DOMContentLoaded', function() {
             const firstButton = document.querySelector('.menu button');
             if (firstButton) { 

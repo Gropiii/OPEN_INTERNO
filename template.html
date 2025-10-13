@@ -27,39 +27,32 @@
             overflow-x: auto;
         }
 
-        /* --- ### INÍCIO DA MUDANÇA PRINCIPAL (CSS) ### --- */
-
-        /* O container que segura os dois logos */
         .logo-container {
             display: flex;
-            /* MODIFICADO: Esta propriedade agora empurra os logos para as extremidades da caixa */
             justify-content: space-between; 
             align-items: center;
-            /* O 'gap' foi removido pois 'space-between' já cria o maior espaço possível */
             margin-bottom: 20px;
         }
 
-        /* Estilo para cada imagem de logo individualmente */
         .logo-item {
-            /* MODIFICADO: A altura máxima foi aumentada para deixar os logos maiores. Ajuste este valor se precisar! */
-            max-height: 250px; 
+            max-height: 250px;
             max-width: 45%;
             width: auto;
             height: auto;
         }
         
-        /* ### FIM DA MUDANÇA PRINCIPAL (CSS) ### */
-
         h1 {
             text-align: center;
             color: #ff0800;
         }
 
-        /* ... (O resto do seu CSS para menu e tabela continua igual) ... */
         .menu { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
         .menu button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #f0f0f0; border: none; border-bottom: 3px solid transparent; margin: 0 5px; transition: all 0.2s ease-in-out; }
         .menu button:hover { background-color: #ffffff; }
         .menu button.active { color: #d9534f; border-bottom: 3px solid #d9534f; background-color: #fff; }
+
+        /* --- ESTILOS DA TABELA DE RESULTADOS --- */
+
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { padding: 10px 12px; border: 1px solid #ddd; text-align: center; white-space: nowrap; }
         table.dataTable th, table.dataTable td { text-align: center !important; }
@@ -67,8 +60,27 @@
         table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after { color: #fff !important; }
         .wod-header { font-size: 1.1em; }
         .sub-header { background-color: #f16666 !important; font-size: 0.9em; }
-        tbody tr:nth-child(even) { background-color: #2e2e2e; }
-        tbody tr { color: #ffffff; }
+        
+        /* ### INÍCIO DA CORREÇÃO DEFINITIVA DO EFEITO ZEBRA ### */
+
+        /* A DataTables adiciona classes 'odd' e 'even' às linhas da tabela. */
+        /* Vamos estilizar essas classes diretamente para garantir que o nosso estilo vença. */
+        /* Esta abordagem é mais específica e robusta que o 'nth-child'. */
+
+        /* Estilo para as linhas ÍMPARES (que a DataTables marca com a classe 'odd') */
+        table.dataTable tbody tr.odd {
+            background-color: #000000 !important; /* Fundo preto */
+            color: #ffffff !important; /* Texto branco */
+        }
+
+        /* Estilo para as linhas PARES (que a DataTables marca com a classe 'even') */
+        table.dataTable tbody tr.even {
+            background-color: #2e2d2d !important; /* Fundo cinza escuro */
+            color: #ffffff !important; /* Texto branco */
+        }
+        
+        /* ### FIM DA CORREÇÃO DEFINITIVA DO EFEITO ZEBRA ### */
+
         .rank, .total-points { font-weight: bold; }
         .points { color: #ffffff; font-weight: bold; font-size: 0.9em; }
         .result { color: #ffffff; font-size: 1em; }
@@ -81,19 +93,8 @@
         @media only screen and (max-width: 768px) {
             body { font-size: 14px; }
             .container { padding: 10px; margin: 10px auto; }
-            
-            /* Em telas pequenas, os logos voltam a ficar centralizados e empilhados */
-            .logo-container {
-                flex-direction: column;
-                justify-content: center; /* Centraliza verticalmente quando empilhado */
-                gap: 15px;
-            }
-
-            /* MODIFICADO: A altura máxima no mobile também foi aumentada proporcionalmente */
-            .logo-item {
-                max-height: 100px;
-            }
-            
+            .logo-container { flex-direction: column; justify-content: center; gap: 15px; }
+            .logo-item { max-height: 100px; }
             h1 { font-size: 1.8em; }
             .menu button { padding: 8px 10px; font-size: 14px; margin: 0 2px; }
             th, td { padding: 6px 5px; font-size: 0.85em; }
@@ -160,14 +161,18 @@
     </div>
 
     <script>
-        // O JavaScript para as abas e DataTables não precisa de nenhuma alteração.
+        // Função para mostrar a categoria selecionada e inicializar a DataTables
         function showCategory(categoryName) {
             document.querySelectorAll('.category-table').forEach(tableDiv => { tableDiv.style.display = 'none'; });
             document.querySelectorAll('.menu button').forEach(button => { button.classList.remove('active'); });
+            
             const activeTableContainer = document.querySelector('#table-container-' + categoryName);
             activeTableContainer.style.display = 'block';
+            
             document.querySelector('#btn-' + categoryName).classList.add('active');
+
             const tableId = '#leaderboard-' + categoryName;
+            
             if (!$.fn.dataTable.isDataTable(tableId)) {
                 $(tableId).DataTable({
                     "paging": false,
@@ -177,6 +182,8 @@
                 });
             }
         }
+
+        // Roda automaticamente assim que a página termina de carregar
         document.addEventListener('DOMContentLoaded', function() {
             const firstButton = document.querySelector('.menu button');
             if (firstButton) { 
