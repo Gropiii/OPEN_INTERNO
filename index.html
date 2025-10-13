@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard - Campeonato CrossFit</title>
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Leaderboard - Open Interno - 2025</title> <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
@@ -73,22 +69,34 @@
             margin-top: 20px;
         }
         
+        /* Estilo aplicado a TODAS as células, tanto de cabeçalho (th) quanto de dados (td) */
+        /* A regra 'text-align' original já estava aqui, mas a biblioteca DataTables pode sobrescrevê-la. */
         th, td {
             padding: 10px 12px;
             border: 1px solid #ddd;
             text-align: center;
             white-space: nowrap;
         }
+
+        /* ### INÍCIO DA CORREÇÃO ### */
+        /* Esta regra mais específica garante que a centralização seja aplicada, mesmo com os estilos da DataTables. */
+        /* O '!important' força esta regra a ter prioridade máxima. */
+        table.dataTable th,
+        table.dataTable td {
+            text-align: center !important;
+        }
+        /* ### FIM DA CORREÇÃO ### */
         
         thead th {
             background-color: #c90707;
             color: #fff;
         }
         
+        /* Estilo para a seta de ordenação que a DataTables adiciona automaticamente */
         table.dataTable thead .sorting:after,
         table.dataTable thead .sorting_asc:after,
         table.dataTable thead .sorting_desc:after {
-            color: #fff !important;
+            color: #fff !important; /* Deixa a seta branca para contrastar com o fundo vermelho */
         }
         
         .wod-header {
@@ -146,35 +154,29 @@
         /* As regras dentro deste bloco só serão aplicadas em telas com largura máxima de 768 pixels. */
         @media only screen and (max-width: 768px) {
             
-            /* Reduz o tamanho da fonte geral da página para economizar espaço */
             body {
                 font-size: 14px;
             }
 
-            /* Reduz o espaçamento interno da caixa principal e as margens */
             .container {
                 padding: 10px;
                 margin: 10px auto;
             }
 
-            /* Diminui o tamanho do logo em telas pequenas */
             .header-logo {
                 max-width: 200px;
             }
 
-            /* Diminui o tamanho do título principal */
             h1 {
                 font-size: 1.8em;
             }
 
-            /* Diminui o tamanho e o espaçamento dos botões do menu */
             .menu button {
                 padding: 8px 10px;
                 font-size: 14px;
                 margin: 0 2px;
             }
 
-            /* A MUDANÇA MAIS IMPORTANTE: Reduz drasticamente o espaçamento e a fonte dentro da tabela */
             th, td {
                 padding: 6px 5px; /* Menos preenchimento nas células */
                 font-size: 0.85em; /* Fonte menor dentro da tabela */
@@ -199,6 +201,7 @@
         
             <div id="table-container-feminino" class="category-table">
                 <h2 style="color: #ffffff;">Categoria: Feminino</h2>
+                
                 <table id="leaderboard-feminino">
                     <thead>
                         <tr>
@@ -334,6 +337,7 @@
         
             <div id="table-container-masculino" class="category-table">
                 <h2 style="color: #ffffff;">Categoria: Masculino</h2>
+                
                 <table id="leaderboard-masculino">
                     <thead>
                         <tr>
@@ -373,7 +377,7 @@
                                     <span class="wod-cat">(RX)</span>
                                 </td>
                             
-                                <td class="points">4</td>
+                                <td class="points">5</td>
                                 <td class="result">
                                     07:08 
                                     <span class="wod-cat">(Scale)</span>
@@ -385,7 +389,7 @@
                                     <span class="wod-cat">(RX)</span>
                                 </td>
                             
-                            <td class="total-points">6</td>
+                            <td class="total-points">7</td>
                         </tr>
                         
                         <tr>
@@ -415,9 +419,34 @@
                         
                         <tr>
                             <td class="rank">3</td>
-                            <td>Pedrinho</td>
+                            <td>Bydão</td>
                             
                                 <td class="points">4</td>
+                                <td class="result">
+                                    95.0 
+                                    <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">2</td>
+                                <td class="result">
+                                    08:52 
+                                    <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">3</td>
+                                <td class="result">
+                                    8 
+                                    <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                            <td class="total-points">9</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="rank">4</td>
+                            <td>Pedrinho</td>
+                            
+                                <td class="points">5</td>
                                 <td class="result">
                                     92.5 
                                     <span class="wod-cat">(RX)</span>
@@ -429,17 +458,17 @@
                                     <span class="wod-cat">(RX)</span>
                                 </td>
                             
-                                <td class="points">3</td>
+                                <td class="points">4</td>
                                 <td class="result">
                                     18 
                                     <span class="wod-cat">(Scale)</span>
                                 </td>
                             
-                            <td class="total-points">8</td>
+                            <td class="total-points">10</td>
                         </tr>
                         
                         <tr>
-                            <td class="rank">4</td>
+                            <td class="rank">5</td>
                             <td>Andrezão</td>
                             
                                 <td class="points">2</td>
@@ -448,49 +477,54 @@
                                     <span class="wod-cat">(RX)</span>
                                 </td>
                             
-                                <td class="points">3</td>
+                                <td class="points">4</td>
                                 <td class="result">
                                     09:35 
                                     <span class="wod-cat">(RX)</span>
                                 </td>
                             
-                                <td class="points">4</td>
+                                <td class="points">5</td>
                                 <td class="result">
                                     15 
                                     <span class="wod-cat">(Scale)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">11</td>
                         </tr>
                          
                     </tbody>
                 </table>
             </div>
          
-<<<<<<< HEAD
-        <p class="footer">Última atualização: 13/10/2025 13:23:51</p>
-=======
-        <p class="footer">Última atualização: 13/10/2025 13:20:33</p>
->>>>>>> 785a8810f8cc0fa2fa1217edc43e062a02beec94
+        <p class="footer">Última atualização: 13/10/2025 13:44:45</p>
     </div>
 
     <script>
+        // Função para mostrar a categoria selecionada e inicializar a DataTables
         function showCategory(categoryName) {
             document.querySelectorAll('.category-table').forEach(tableDiv => { tableDiv.style.display = 'none'; });
             document.querySelectorAll('.menu button').forEach(button => { button.classList.remove('active'); });
+            
             const activeTableContainer = document.querySelector('#table-container-' + categoryName);
             activeTableContainer.style.display = 'block';
+            
             document.querySelector('#btn-' + categoryName).classList.add('active');
+
             const tableId = '#leaderboard-' + categoryName;
+            
+            // Verifica se a tabela já foi "transformada" pela DataTables antes
             if (!$.fn.dataTable.isDataTable(tableId)) {
+                // Se não foi, inicializa a DataTables com algumas opções
                 $(tableId).DataTable({
-                    "paging": false,
-                    "searching": false,
-                    "info": false,
-                    "order": [[ 0, 'asc' ]]
+                    "paging": false,      // Desativa a paginação (não queremos "Página 1 de X")
+                    "searching": false,   // Desativa a caixa de busca
+                    "info": false,        // Desativa o texto "Mostrando X de Y resultados"
+                    "order": [[ 0, 'asc' ]] // Define a ordenação inicial pela primeira coluna (Rank), do menor para o maior
                 });
             }
         }
+
+        // Roda automaticamente assim que a página termina de carregar
         document.addEventListener('DOMContentLoaded', function() {
             const firstButton = document.querySelector('.menu button');
             if (firstButton) { 
