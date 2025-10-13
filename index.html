@@ -10,7 +10,8 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <style>
-        /* --- ESTILOS GERAIS --- */
+        /* --- ESTILOS GERAIS PARA DESKTOP (TELA GRANDE) --- */
+        
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             background-color: #f4f4f4;
@@ -26,7 +27,6 @@
             overflow-x: auto;
         }
 
-        /* --- ESTILO DO LOGO E TÍTULO --- */
         .header-logo {
             display: block;
             margin: 0 auto 20px auto;
@@ -39,7 +39,6 @@
             color: #ff0800;
         }
 
-        /* --- ESTILOS DO MENU DE CATEGORIAS --- */
         .menu {
             text-align: center;
             margin-bottom: 25px;
@@ -68,7 +67,6 @@
             background-color: #fff;
         }
 
-        /* --- ESTILOS DA TABELA DE RESULTADOS --- */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -87,11 +85,10 @@
             color: #fff;
         }
         
-        /* NOVO: Estilo para a seta de ordenação que a DataTables adiciona automaticamente */
         table.dataTable thead .sorting:after,
         table.dataTable thead .sorting_asc:after,
         table.dataTable thead .sorting_desc:after {
-            color: #fff !important; /* Deixa a seta branca para contrastar com o fundo vermelho */
+            color: #fff !important;
         }
         
         .wod-header {
@@ -143,30 +140,65 @@
         .category-table {
             display: none;
         }
+
+        /* --- OTIMIZAÇÃO PARA CELULARES (DESIGN RESPONSIVO) --- */
+        
+        /* As regras dentro deste bloco só serão aplicadas em telas com largura máxima de 768 pixels. */
+        @media only screen and (max-width: 768px) {
+            
+            /* Reduz o tamanho da fonte geral da página para economizar espaço */
+            body {
+                font-size: 14px;
+            }
+
+            /* Reduz o espaçamento interno da caixa principal e as margens */
+            .container {
+                padding: 10px;
+                margin: 10px auto;
+            }
+
+            /* Diminui o tamanho do logo em telas pequenas */
+            .header-logo {
+                max-width: 200px;
+            }
+
+            /* Diminui o tamanho do título principal */
+            h1 {
+                font-size: 1.8em;
+            }
+
+            /* Diminui o tamanho e o espaçamento dos botões do menu */
+            .menu button {
+                padding: 8px 10px;
+                font-size: 14px;
+                margin: 0 2px;
+            }
+
+            /* A MUDANÇA MAIS IMPORTANTE: Reduz drasticamente o espaçamento e a fonte dentro da tabela */
+            th, td {
+                padding: 6px 5px; /* Menos preenchimento nas células */
+                font-size: 0.85em; /* Fonte menor dentro da tabela */
+            }
+        }
     </style>
 </head>
 <body>
+    
     <div class="container">
         
         <img src="logo-tyranno.png" alt="CrossFit Tyranno Logo" class="header-logo">
-
         <h1>Classificação - Open Interno - 2025</h1>
-
         <div class="menu">
             
-                <button id="btn-feminino" onclick="showCategory('feminino')">
-                    Feminino 
-                </button>
+                <button id="btn-feminino" onclick="showCategory('feminino')">Feminino</button>
             
-                <button id="btn-masculino" onclick="showCategory('masculino')">
-                    Masculino 
-                </button>
+                <button id="btn-masculino" onclick="showCategory('masculino')">Masculino</button>
              
         </div>
 
         
-            <div id="table-container-feminino" class="category-table"> <h2 style="color: #ffffff;">Categoria: Feminino</h2>
-                
+            <div id="table-container-feminino" class="category-table">
+                <h2 style="color: #ffffff;">Categoria: Feminino</h2>
                 <table id="leaderboard-feminino">
                     <thead>
                         <tr>
@@ -300,8 +332,8 @@
                 </table>
             </div>
         
-            <div id="table-container-masculino" class="category-table"> <h2 style="color: #ffffff;">Categoria: Masculino</h2>
-                
+            <div id="table-container-masculino" class="category-table">
+                <h2 style="color: #ffffff;">Categoria: Masculino</h2>
                 <table id="leaderboard-masculino">
                     <thead>
                         <tr>
@@ -435,41 +467,26 @@
                 </table>
             </div>
          
-        <p class="footer">Última atualização: 13/10/2025 13:16:54</p>
+        <p class="footer">Última atualização: 13/10/2025 13:23:51</p>
     </div>
 
     <script>
-        // Esta função é chamada toda vez que um botão de categoria é clicado
         function showCategory(categoryName) {
-            // Esconde todas as divs de tabela
             document.querySelectorAll('.category-table').forEach(tableDiv => { tableDiv.style.display = 'none'; });
-            
-            // Desmarca todos os botões
             document.querySelectorAll('.menu button').forEach(button => { button.classList.remove('active'); });
-            
-            // Mostra a div da categoria selecionada
             const activeTableContainer = document.querySelector('#table-container-' + categoryName);
             activeTableContainer.style.display = 'block';
-            
-            // Marca o botão clicado como ativo
             document.querySelector('#btn-' + categoryName).classList.add('active');
-
-            // --- NOVO: Lógica para ativar a DataTables ---
             const tableId = '#leaderboard-' + categoryName;
-            
-            // Verifica se a tabela já foi "transformada" pela DataTables antes
             if (!$.fn.dataTable.isDataTable(tableId)) {
-                // Se não foi, inicializa a DataTables com algumas opções
                 $(tableId).DataTable({
-                    "paging": false,      // Desativa a paginação (não queremos "Página 1 de X")
-                    "searching": false,   // Desativa a caixa de busca
-                    "info": false,        // Desativa o texto "Mostrando X de Y resultados"
-                    "order": [[ 0, 'asc' ]] // Define a ordenação inicial pela primeira coluna (Rank), do menor para o maior
+                    "paging": false,
+                    "searching": false,
+                    "info": false,
+                    "order": [[ 0, 'asc' ]]
                 });
             }
         }
-
-        // Este código roda automaticamente assim que a página termina de carregar
         document.addEventListener('DOMContentLoaded', function() {
             const firstButton = document.querySelector('.menu button');
             if (firstButton) { 
