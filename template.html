@@ -24,7 +24,6 @@
         .result { color: #555; font-size: 1em; }
         .footer { text-align: center; margin-top: 20px; font-size: 0.8em; color: #777; }
         .category-table { display: none; }
-        /* NOVO ESTILO para a tag RX/Scale */
         .wod-cat { font-size: 0.75em; color: #888; font-weight: bold; margin-left: 4px; }
     </style>
 </head>
@@ -47,7 +46,7 @@
                         <th rowspan="2">Rank</th>
                         <th rowspan="2">Atleta</th>
                         {% for wod_base in wods_base_names %}
-                        <th colspan="2" class="wod-header">{{ wod_base }}</th>
+                        <th colspan="2" class="wod-header">{{ wod_base.split('_')[1:-1] | join(' ') }}</th>
                         {% endfor %}
                         <th rowspan="2">Total Pontos</th>
                     </tr>
