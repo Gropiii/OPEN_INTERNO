@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Leaderboard - Open Interno - 2025</title> <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Open Interno - 2025</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
@@ -15,7 +19,7 @@
         }
         
         .container {
-            max-width: 95%;
+            max-width: 100%;
             margin: 20px auto;
             padding: 20px;
             background-color: #000000;
@@ -23,164 +27,76 @@
             overflow-x: auto;
         }
 
-        .header-logo {
-            display: block;
-            margin: 0 auto 20px auto;
-            max-width: 500px;
+        /* --- ### INÍCIO DA MUDANÇA PRINCIPAL (CSS) ### --- */
+
+        /* O container que segura os dois logos */
+        .logo-container {
+            display: flex;
+            /* MODIFICADO: Esta propriedade agora empurra os logos para as extremidades da caixa */
+            justify-content: space-between; 
+            align-items: center;
+            /* O 'gap' foi removido pois 'space-between' já cria o maior espaço possível */
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para cada imagem de logo individualmente */
+        .logo-item {
+            /* MODIFICADO: A altura máxima foi aumentada para deixar os logos maiores. Ajuste este valor se precisar! */
+            max-height: 250px; 
+            max-width: 45%;
+            width: auto;
             height: auto;
         }
+        
+        /* ### FIM DA MUDANÇA PRINCIPAL (CSS) ### */
 
         h1 {
             text-align: center;
             color: #ff0800;
         }
 
-        .menu {
-            text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-        }
-        
-        .menu button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #f0f0f0;
-            border: none;
-            border-bottom: 3px solid transparent;
-            margin: 0 5px;
-            transition: all 0.2s ease-in-out;
-        }
-        
-        .menu button:hover {
-            background-color: #ffffff;
-        }
-        
-        .menu button.active {
-            color: #d9534f;
-            border-bottom: 3px solid #d9534f;
-            background-color: #fff;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        /* Estilo aplicado a TODAS as células, tanto de cabeçalho (th) quanto de dados (td) */
-        /* A regra 'text-align' original já estava aqui, mas a biblioteca DataTables pode sobrescrevê-la. */
-        th, td {
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        /* ### INÍCIO DA CORREÇÃO ### */
-        /* Esta regra mais específica garante que a centralização seja aplicada, mesmo com os estilos da DataTables. */
-        /* O '!important' força esta regra a ter prioridade máxima. */
-        table.dataTable th,
-        table.dataTable td {
-            text-align: center !important;
-        }
-        /* ### FIM DA CORREÇÃO ### */
-        
-        thead th {
-            background-color: #c90707;
-            color: #fff;
-        }
-        
-        /* Estilo para a seta de ordenação que a DataTables adiciona automaticamente */
-        table.dataTable thead .sorting:after,
-        table.dataTable thead .sorting_asc:after,
-        table.dataTable thead .sorting_desc:after {
-            color: #fff !important; /* Deixa a seta branca para contrastar com o fundo vermelho */
-        }
-        
-        .wod-header {
-            font-size: 1.1em;
-        }
-        
-        .sub-header {
-            background-color: #f16666 !important;
-            font-size: 0.9em;
-        }
-        
-        tbody tr:nth-child(even) {
-            background-color: #2e2e2e;
-        }
-        
-        tbody tr { 
-            color: #ffffff;
-        }
-
-        .rank, .total-points {
-            font-weight: bold;
-        }
-        
-        .points {
-            color: #ffffff;
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-
-        .result {
-            color: #ffffff;
-            font-size: 1em;
-        }
-        
-        .wod-cat {
-            font-size: 0.75em;
-            color: #888;
-            font-weight: bold;
-            margin-left: 4px;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.8em;
-            color: #bbb3b3;
-        }
-
-        .category-table {
-            display: none;
-        }
+        /* ... (O resto do seu CSS para menu e tabela continua igual) ... */
+        .menu { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        .menu button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #f0f0f0; border: none; border-bottom: 3px solid transparent; margin: 0 5px; transition: all 0.2s ease-in-out; }
+        .menu button:hover { background-color: #ffffff; }
+        .menu button.active { color: #d9534f; border-bottom: 3px solid #d9534f; background-color: #fff; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px 12px; border: 1px solid #ddd; text-align: center; white-space: nowrap; }
+        table.dataTable th, table.dataTable td { text-align: center !important; }
+        thead th { background-color: #c90707; color: #fff; }
+        table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after { color: #fff !important; }
+        .wod-header { font-size: 1.1em; }
+        .sub-header { background-color: #f16666 !important; font-size: 0.9em; }
+        tbody tr:nth-child(even) { background-color: #2e2e2e; }
+        tbody tr { color: #ffffff; }
+        .rank, .total-points { font-weight: bold; }
+        .points { color: #ffffff; font-weight: bold; font-size: 0.9em; }
+        .result { color: #ffffff; font-size: 1em; }
+        .wod-cat { font-size: 0.75em; color: #888; font-weight: bold; margin-left: 4px; }
+        .footer { text-align: center; margin-top: 20px; font-size: 0.8em; color: #bbb3b3; }
+        .category-table { display: none; }
 
         /* --- OTIMIZAÇÃO PARA CELULARES (DESIGN RESPONSIVO) --- */
         
-        /* As regras dentro deste bloco só serão aplicadas em telas com largura máxima de 768 pixels. */
         @media only screen and (max-width: 768px) {
+            body { font-size: 14px; }
+            .container { padding: 10px; margin: 10px auto; }
             
-            body {
-                font-size: 14px;
+            /* Em telas pequenas, os logos voltam a ficar centralizados e empilhados */
+            .logo-container {
+                flex-direction: column;
+                justify-content: center; /* Centraliza verticalmente quando empilhado */
+                gap: 15px;
             }
 
-            .container {
-                padding: 10px;
-                margin: 10px auto;
+            /* MODIFICADO: A altura máxima no mobile também foi aumentada proporcionalmente */
+            .logo-item {
+                max-height: 100px;
             }
-
-            .header-logo {
-                max-width: 200px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
-
-            .menu button {
-                padding: 8px 10px;
-                font-size: 14px;
-                margin: 0 2px;
-            }
-
-            th, td {
-                padding: 6px 5px; /* Menos preenchimento nas células */
-                font-size: 0.85em; /* Fonte menor dentro da tabela */
-            }
+            
+            h1 { font-size: 1.8em; }
+            .menu button { padding: 8px 10px; font-size: 14px; margin: 0 2px; }
+            th, td { padding: 6px 5px; font-size: 0.85em; }
         }
     </style>
 </head>
@@ -188,8 +104,13 @@
     
     <div class="container">
         
-        <img src="logo-tyranno.png" alt="CrossFit Tyranno Logo" class="header-logo">
-        <h1>Classificação - Open Interno - 2025</h1>
+        <div class="logo-container">
+            <img src="logo-tyranno.png" alt="CrossFit Tyranno Logo" class="logo-item">
+            <img src="logo-tyranno2.png" alt="Logo Open Interno 2025" class="logo-item">
+        </div>
+        
+        <h1>Classificação - 2025</h1>
+        
         <div class="menu">
             
                 <button id="btn-feminino" onclick="showCategory('feminino')">Feminino</button>
@@ -201,7 +122,6 @@
         
             <div id="table-container-feminino" class="category-table">
                 <h2 style="color: #ffffff;">Categoria: Feminino</h2>
-                
                 <table id="leaderboard-feminino">
                     <thead>
                         <tr>
@@ -337,7 +257,6 @@
         
             <div id="table-container-masculino" class="category-table">
                 <h2 style="color: #ffffff;">Categoria: Masculino</h2>
-                
                 <table id="leaderboard-masculino">
                     <thead>
                         <tr>
@@ -369,7 +288,6 @@
                         
                         <tr>
                             <td class="rank">1</td>
-<<<<<<< HEAD
                             <td>Thi</td>
                             
                                 <td class="points">1</td>
@@ -395,8 +313,6 @@
                         
                         <tr>
                             <td class="rank">2</td>
-=======
->>>>>>> 4d499fe1f0aea9e13df2b7cd426763417bbc77b1
                             <td>Paulinho</td>
                             
                                 <td class="points">3</td>
@@ -414,31 +330,6 @@
                                 <td class="points">2</td>
                                 <td class="result">
                                     10 
-                                    <span class="wod-cat">(RX)</span>
-                                </td>
-                            
-                            <td class="total-points">7</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank">2</td>
-                            <td>Thi</td>
-                            
-                                <td class="points">1</td>
-                                <td class="result">
-                                    107.5 
-                                    <span class="wod-cat">(RX)</span>
-                                </td>
-                            
-                                <td class="points">5</td>
-                                <td class="result">
-                                    07:08 
-                                    <span class="wod-cat">(Scale)</span>
-                                </td>
-                            
-                                <td class="points">1</td>
-                                <td class="result">
-                                    20 
                                     <span class="wod-cat">(RX)</span>
                                 </td>
                             
@@ -524,39 +415,27 @@
                 </table>
             </div>
          
-<<<<<<< HEAD
-        <p class="footer">Última atualização: 13/10/2025 13:44:45</p>
-=======
-        <p class="footer">Última atualização: 13/10/2025 13:28:46</p>
->>>>>>> 4d499fe1f0aea9e13df2b7cd426763417bbc77b1
+        <p class="footer">Última atualização: 13/10/2025 14:00:39</p>
     </div>
 
     <script>
-        // Função para mostrar a categoria selecionada e inicializar a DataTables
+        // O JavaScript para as abas e DataTables não precisa de nenhuma alteração.
         function showCategory(categoryName) {
             document.querySelectorAll('.category-table').forEach(tableDiv => { tableDiv.style.display = 'none'; });
             document.querySelectorAll('.menu button').forEach(button => { button.classList.remove('active'); });
-            
             const activeTableContainer = document.querySelector('#table-container-' + categoryName);
             activeTableContainer.style.display = 'block';
-            
             document.querySelector('#btn-' + categoryName).classList.add('active');
-
             const tableId = '#leaderboard-' + categoryName;
-            
-            // Verifica se a tabela já foi "transformada" pela DataTables antes
             if (!$.fn.dataTable.isDataTable(tableId)) {
-                // Se não foi, inicializa a DataTables com algumas opções
                 $(tableId).DataTable({
-                    "paging": false,      // Desativa a paginação (não queremos "Página 1 de X")
-                    "searching": false,   // Desativa a caixa de busca
-                    "info": false,        // Desativa o texto "Mostrando X de Y resultados"
-                    "order": [[ 0, 'asc' ]] // Define a ordenação inicial pela primeira coluna (Rank), do menor para o maior
+                    "paging": false,
+                    "searching": false,
+                    "info": false,
+                    "order": [[ 0, 'asc' ]]
                 });
             }
         }
-
-        // Roda automaticamente assim que a página termina de carregar
         document.addEventListener('DOMContentLoaded', function() {
             const firstButton = document.querySelector('.menu button');
             if (firstButton) { 
