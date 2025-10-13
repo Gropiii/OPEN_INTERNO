@@ -1,305 +1,423 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard - Campeonato CrossFit</title>
-    <style>
-        /* ... (todos os estilos anteriores permanecem os mesmos) ... */
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #f4f4f4; color: #333; }
-        .container { max-width: 95%; margin: 20px auto; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow-x: auto; }
-        h1 { text-align: center; color: #d9534f; }
-        .menu { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
-        .menu button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #f0f0f0; border: none; border-bottom: 3px solid transparent; margin: 0 5px; transition: all 0.2s ease-in-out; }
-        .menu button:hover { background-color: #e0e0e0; }
-        .menu button.active { color: #d9534f; border-bottom: 3px solid #d9534f; background-color: #fff; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 10px 12px; border: 1px solid #ddd; text-align: center; white-space: nowrap; }
-        thead th { background-color: #333; color: #fff; }
-        .wod-header { font-size: 1.1em; }
-        .sub-header { background-color: #555 !important; font-size: 0.9em; }
-        tbody tr:nth-child(even) { background-color: #f9f9f9; }
-        .rank, .total-points { font-weight: bold; }
-        .points { color: #d9534f; font-weight: bold; font-size: 0.9em; }
-        .result { color: #555; font-size: 1em; }
-        .footer { text-align: center; margin-top: 20px; font-size: 0.8em; color: #777; }
-        .category-table { display: none; }
-        .wod-cat { font-size: 0.75em; color: #888; font-weight: bold; margin-left: 4px; }
+    <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Leaderboard - Campeonato CrossFit</title> <style>
+        /* --- ESTILOS GERAIS --- */
+        
+        /* Define a aparência do corpo da página inteira */
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Lista de fontes modernas para garantir boa aparência em qualquer sistema */
+            background-color: #f4f4f4; /* Cor de fundo cinza claro para a área fora da caixa principal */
+            color: #333; /* Cor padrão do texto (quase preto), caso não seja especificado em outro lugar */
+        }
+        
+        /* A "caixa" principal que envolve todo o conteúdo do leaderboard */
+        .container {
+            max-width: 95%; /* A caixa nunca ocupará mais que 95% da largura da tela, deixando pequenas margens */
+            margin: 20px auto; /* Centraliza a caixa na tela (auto nas laterais) com 20px de margem em cima e embaixo */
+            padding: 20px; /* Adiciona um espaçamento interno para que o conteúdo não grude nas bordas */
+            background-color: #000000; /* Cor de fundo preta que você personalizou */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Uma sombra suave e sutil ao redor da caixa */
+            overflow-x: auto; /* Se a tabela for muito larga para a tela, cria uma barra de rolagem horizontal */
+        }
+
+        /* --- ESTILO DO LOGO E TÍTULO --- */
+        
+        /* Estilo para o logo no topo da página */
+        .header-logo {
+            display: block; /* Faz a imagem se comportar como um bloco, o que permite a centralização por margem */
+            margin: 0 auto 20px auto; /* Centraliza a imagem horizontalmente e adiciona 20px de espaço abaixo dela */
+            max-width: 500px; /* Define uma largura máxima para a imagem. Você pode ajustar este valor! */
+            height: auto; /* Mantém a proporção da imagem (não a deixa esticada) */
+        }
+
+        /* O título principal da página */
+        h1 {
+            text-align: center; /* Centraliza o texto do título */
+            color: #ff0800; /* Cor vermelha vibrante que você personalizou */
+        }
+
+        /* --- ESTILOS DO MENU DE CATEGORIAS --- */
+
+        /* A área que contém os botões de categoria (Masculino, Feminino, etc.) */
+        .menu {
+            text-align: center; /* Centraliza os botões dentro da área do menu */
+            margin-bottom: 25px; /* Adiciona um espaço abaixo do menu, antes da tabela */
+            border-bottom: 2px solid #eee; /* Cria uma linha divisória cinza claro abaixo dos botões */
+            padding-bottom: 15px; /* Adiciona um espaço para a linha não ficar colada nos botões */
+        }
+        
+        /* Estilo para cada botão individual do menu */
+        .menu button {
+            padding: 10px 20px; /* Espaçamento interno do botão (altura e largura) */
+            font-size: 16px; /* Tamanho da fonte do texto do botão */
+            cursor: pointer; /* Transforma o cursor do mouse em uma "mãozinha" para indicar que é clicável */
+            background-color: #ffffff; /* Cor de fundo padrão do botão (cinza claro) */
+            border: none; /* Remove a borda padrão do navegador */
+            border-bottom: 3px solid transparent; /* Adiciona uma borda inferior invisível (será usada para o efeito de "ativo") */
+            margin: 0 5px; /* Pequeno espaço entre os botões */
+            transition: all 0.2s ease-in-out; /* Cria uma animação suave para qualquer mudança de estilo (cor, borda) */
+        }
+        
+        /* Estilo do botão quando o mouse passa por cima dele */
+        .menu button:hover {
+            background-color: #ffffff; /* O fundo do botão fica branco */
+        }
+        
+        /* Estilo ESPECIAL para o botão que está ATIVO (selecionado) */
+        .menu button.active {
+            color: #d9534f; /* A cor do texto do botão ativo fica vermelha */
+            border-bottom: 3px solid #d9534f; /* A borda inferior antes invisível agora fica vermelha e visível, criando o efeito de "aba" */
+            background-color: #fff; /* O fundo fica branco para destacar */
+        }
+
+        /* --- ESTILOS DA TABELA DE RESULTADOS --- */
+        
+        /* A tabela como um todo */
+        table {
+            width: 100%; /* Faz a tabela ocupar toda a largura disponível na caixa container */
+            border-collapse: collapse; /* Remove o espaço padrão entre as bordas das células, unindo-as */
+            margin-top: 20px; /* Adiciona um espaço acima da tabela */
+        }
+        
+        /* Estilo aplicado a TODAS as células, tanto de cabeçalho (th) quanto de dados (td) */
+        th, td {
+            padding: 10px 12px; /* Espaçamento interno das células */
+            border: 1px solid #ddd; /* Borda cinza clara para cada célula, formando a grade */
+            text-align: center; /* Centraliza todo o conteúdo dentro das células */
+            white-space: nowrap; /* Impede que textos longos (como nomes) quebrem em várias linhas */
+        }
+        
+        /* Estilo aplicado APENAS às células de cabeçalho (a primeira e segunda linha da tabela) */
+        thead th {
+            background-color: #c90707; /* Cor de fundo vermelho escuro que você personalizou */
+            color: #fff; /* Cor do texto branca */
+        }
+        
+        /* Células de cabeçalho que contêm o nome do WOD (ex: "PR DE CLEAN") */
+        .wod-header {
+            font-size: 1.1em; /* Fonte um pouco maior para dar destaque */
+        }
+        
+        /* Células de sub-cabeçalho ("Pontos", "Resultado") */
+        .sub-header {
+            background-color: #f16666 !important; /* Fundo vermelho mais claro. O "!important" força essa regra a ser aplicada sobre outras */
+            font-size: 0.9em; /* Fonte um pouco menor */
+        }
+        
+        /* Estilo para as linhas PARES (2ª, 4ª, 6ª...) do CORPO da tabela */
+        tbody tr:nth-child(even) {
+            background-color: #2e2e2e; /* Fundo cinza escuro, criando o efeito "zebra" para facilitar a leitura */
+        }
+        
+        /* Estilo geral para TODAS as linhas do corpo da tabela */
+        tbody tr { 
+            color: #ffffff; /* Define a cor do texto como branco para todas as células de dados */
+        }
+
+        /* Estilo para as células específicas de Rank e Total de Pontos */
+        .rank, .total-points {
+            font-weight: bold; /* Deixa o texto em negrito */
+        }
+        
+        /* Estilo para as células que mostram a PONTUAÇÃO do WOD */
+        .points {
+            color: #ffffff; /* Cor branca para o texto */
+            font-weight: bold; /* Negrito */
+            font-size: 0.9em; /* Fonte um pouco menor */
+        }
+
+        /* Estilo para as células que mostram o RESULTADO bruto (tempo, reps, etc.) */
+        .result {
+            color: #ffffff; /* Cor branca para o texto */
+            font-size: 1em; /* Tamanho normal da fonte */
+        }
+        
+        /* Estilo para o pequeno texto "(RX)" ou "(Scale)" */
+        .wod-cat {
+            font-size: 0.75em; /* Fonte bem pequena */
+            color: #888; /* Cor cinza para não chamar muita atenção */
+            font-weight: bold; /* Negrito */
+            margin-left: 4px; /* Pequeno espaço à esquerda para separar do resultado */
+        }
+
+        /* O texto de rodapé com a data de atualização */
+        .footer {
+            text-align: center; /* Centralizado */
+            margin-top: 20px; /* Espaço acima do rodapé */
+            font-size: 0.8em; /* Fonte pequena */
+            color: #bbb3b3; /* Cor cinza claro que você personalizou */
+        }
+
+        /* REGRA CRUCIAL: Por padrão, todas as tabelas de categoria começam escondidas */
+        .category-table {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Tabela de Classificação</h1>
+        
+        <img src="logo-tyranno.png" alt="CrossFit Tyranno Logo" class="header-logo">
+
+        <h1>Classificação - Open Interno - 2025</h1>
 
         <div class="menu">
             
-            <button id="btn-feminino" onclick="showCategory('feminino')">Feminino</button>
+                <button id="btn-feminino" onclick="showCategory('feminino')">
+                    Feminino </button>
             
-            <button id="btn-masculino" onclick="showCategory('masculino')">Masculino</button>
-            
-        </div>
+                <button id="btn-masculino" onclick="showCategory('masculino')">
+                    Masculino </button>
+             </div>
 
         
-        <div id="table-feminino" class="category-table">
-            <h2>Categoria: Feminino</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th rowspan="2">Rank</th>
-                        <th rowspan="2">Atleta</th>
+            <div id="table-feminino" class="category-table">
+                <h2 style="color: #ffffff;">Categoria: Feminino</h2> <table>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Rank</th>
+                            <th rowspan="2">Atleta</th>
+                            
+                                <th colspan="2" class="wod-header">PR CLEAN</th>
+                            
+                                <th colspan="2" class="wod-header">FRAN</th>
+                            
+                                <th colspan="2" class="wod-header">MAX BMU</th>
+                            
+                            <th rowspan="2">Total Pontos</th>
+                        </tr>
+                        <tr>
+                            
+                                <th class="sub-header">Pontos</th>
+                                <th class="sub-header">Peso</th>
+                            
+                                <th class="sub-header">Pontos</th>
+                                <th class="sub-header">Tempo</th>
+                            
+                                <th class="sub-header">Pontos</th>
+                                <th class="sub-header">Reps</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
                         
-                        <th colspan="2" class="wod-header">PR CLEAN</th>
+                        <tr>
+                            <td class="rank">1</td>
+                            <td>Carol Ussier</td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    65.0 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    06:35 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">2</td>
+                                <td class="result">
+                                    8 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                            <td class="total-points">4</td>
+                        </tr>
                         
-                        <th colspan="2" class="wod-header">FRAN</th>
+                        <tr>
+                            <td class="rank">2</td>
+                            <td>Má</td>
+                            
+                                <td class="points">2</td>
+                                <td class="result">
+                                    62.5 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">2</td>
+                                <td class="result">
+                                    08:27 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">3</td>
+                                <td class="result">
+                                    9 <span class="wod-cat">(Scale)</span>
+                                </td>
+                            
+                            <td class="total-points">7</td>
+                        </tr>
                         
-                        <th colspan="2" class="wod-header">MAX BMU</th>
-                        
-                        <th rowspan="2">Total Pontos</th>
-                    </tr>
-                    <tr>
-                        
-                        <th class="sub-header">Pontos</th>
-                        <th class="sub-header">Resultado</th>
-                        
-                        <th class="sub-header">Pontos</th>
-                        <th class="sub-header">Resultado</th>
-                        
-                        <th class="sub-header">Pontos</th>
-                        <th class="sub-header">Resultado</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <tr>
-                        <td class="rank">1</td>
-                        <td>Carol Ussier</td>
-                        
-                        <td class="points">1</td>
-                        <td class="result">
-                            65.0
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">1</td>
-                        <td class="result">
-                            06:35
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">2</td>
-                        <td class="result">
-                            8
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="total-points">4</td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="rank">2</td>
-                        <td>Má</td>
-                        
-                        <td class="points">2</td>
-                        <td class="result">
-                            62.5
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">2</td>
-                        <td class="result">
-                            08:27
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">3</td>
-                        <td class="result">
-                            9
-                            <span class="wod-cat">(Scale)</span>
-                        </td>
-                        
-                        <td class="total-points">7</td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="rank">3</td>
-                        <td>Ana Bia</td>
-                        
-                        <td class="points">3</td>
-                        <td class="result">
-                            60.0
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">3</td>
-                        <td class="result">
-                            07:06
-                            <span class="wod-cat">(Scale)</span>
-                        </td>
-                        
-                        <td class="points">1</td>
-                        <td class="result">
-                            10
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="total-points">7</td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-        </div>
+                        <tr>
+                            <td class="rank">3</td>
+                            <td>Ana Bia</td>
+                            
+                                <td class="points">3</td>
+                                <td class="result">
+                                    60.0 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">3</td>
+                                <td class="result">
+                                    07:06 <span class="wod-cat">(Scale)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    10 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                            <td class="total-points">7</td>
+                        </tr>
+                         </tbody>
+                </table>
+            </div>
         
-        <div id="table-masculino" class="category-table">
-            <h2>Categoria: Masculino</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th rowspan="2">Rank</th>
-                        <th rowspan="2">Atleta</th>
+            <div id="table-masculino" class="category-table">
+                <h2 style="color: #ffffff;">Categoria: Masculino</h2> <table>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Rank</th>
+                            <th rowspan="2">Atleta</th>
+                            
+                                <th colspan="2" class="wod-header">PR CLEAN</th>
+                            
+                                <th colspan="2" class="wod-header">FRAN</th>
+                            
+                                <th colspan="2" class="wod-header">MAX BMU</th>
+                            
+                            <th rowspan="2">Total Pontos</th>
+                        </tr>
+                        <tr>
+                            
+                                <th class="sub-header">Pontos</th>
+                                <th class="sub-header">Peso</th>
+                            
+                                <th class="sub-header">Pontos</th>
+                                <th class="sub-header">Tempo</th>
+                            
+                                <th class="sub-header">Pontos</th>
+                                <th class="sub-header">Reps</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
                         
-                        <th colspan="2" class="wod-header">PR CLEAN</th>
+                        <tr>
+                            <td class="rank">1</td>
+                            <td>Thi</td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    107.5 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">4</td>
+                                <td class="result">
+                                    07:08 <span class="wod-cat">(Scale)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    20 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                            <td class="total-points">6</td>
+                        </tr>
                         
-                        <th colspan="2" class="wod-header">FRAN</th>
+                        <tr>
+                            <td class="rank">2</td>
+                            <td>Paulinho</td>
+                            
+                                <td class="points">3</td>
+                                <td class="result">
+                                    100.0 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">2</td>
+                                <td class="result">
+                                    08:52 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">2</td>
+                                <td class="result">
+                                    10 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                            <td class="total-points">7</td>
+                        </tr>
                         
-                        <th colspan="2" class="wod-header">MAX BMU</th>
+                        <tr>
+                            <td class="rank">3</td>
+                            <td>Pedrinho</td>
+                            
+                                <td class="points">4</td>
+                                <td class="result">
+                                    92.5 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    08:32 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">3</td>
+                                <td class="result">
+                                    18 <span class="wod-cat">(Scale)</span>
+                                </td>
+                            
+                            <td class="total-points">8</td>
+                        </tr>
                         
-                        <th rowspan="2">Total Pontos</th>
-                    </tr>
-                    <tr>
-                        
-                        <th class="sub-header">Pontos</th>
-                        <th class="sub-header">Resultado</th>
-                        
-                        <th class="sub-header">Pontos</th>
-                        <th class="sub-header">Resultado</th>
-                        
-                        <th class="sub-header">Pontos</th>
-                        <th class="sub-header">Resultado</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <tr>
-                        <td class="rank">1</td>
-                        <td>Thi</td>
-                        
-                        <td class="points">1</td>
-                        <td class="result">
-                            107.5
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">4</td>
-                        <td class="result">
-                            07:08
-                            <span class="wod-cat">(Scale)</span>
-                        </td>
-                        
-                        <td class="points">1</td>
-                        <td class="result">
-                            20
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="total-points">6</td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="rank">2</td>
-                        <td>Paulinho</td>
-                        
-                        <td class="points">3</td>
-                        <td class="result">
-                            100.0
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">2</td>
-                        <td class="result">
-                            08:52
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">2</td>
-                        <td class="result">
-                            10
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="total-points">7</td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="rank">3</td>
-                        <td>Pedrinho</td>
-                        
-                        <td class="points">4</td>
-                        <td class="result">
-                            92.5
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">1</td>
-                        <td class="result">
-                            08:32
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">3</td>
-                        <td class="result">
-                            18
-                            <span class="wod-cat">(Scale)</span>
-                        </td>
-                        
-                        <td class="total-points">8</td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="rank">4</td>
-                        <td>Andrezão</td>
-                        
-                        <td class="points">2</td>
-                        <td class="result">
-                            105.0
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">3</td>
-                        <td class="result">
-                            09:35
-                            <span class="wod-cat">(RX)</span>
-                        </td>
-                        
-                        <td class="points">4</td>
-                        <td class="result">
-                            15
-                            <span class="wod-cat">(Scale)</span>
-                        </td>
-                        
-                        <td class="total-points">9</td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-        </div>
-        
-
-        <p class="footer">Última atualização: 13/10/2025 12:28:56</p>
+                        <tr>
+                            <td class="rank">4</td>
+                            <td>Andrezão</td>
+                            
+                                <td class="points">2</td>
+                                <td class="result">
+                                    105.0 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">3</td>
+                                <td class="result">
+                                    09:35 <span class="wod-cat">(RX)</span>
+                                </td>
+                            
+                                <td class="points">4</td>
+                                <td class="result">
+                                    15 <span class="wod-cat">(Scale)</span>
+                                </td>
+                            
+                            <td class="total-points">9</td>
+                        </tr>
+                         </tbody>
+                </table>
+            </div>
+         <p class="footer">Última atualização: 13/10/2025 12:54:03</p>
     </div>
 
     <script>
-        // ... (o JavaScript permanece exatamente o mesmo) ...
+        // Esta função é chamada toda vez que um botão de categoria é clicado
         function showCategory(categoryName) {
+            // 1. Encontra TODOS os elementos com a classe 'category-table' e os esconde
             document.querySelectorAll('.category-table').forEach(table => { table.style.display = 'none'; });
+            
+            // 2. Encontra TODOS os botões do menu e remove a classe 'active' deles (para "desmarcar" todos)
             document.querySelectorAll('.menu button').forEach(button => { button.classList.remove('active'); });
+            
+            // 3. Encontra a tabela ESPECÍFICA da categoria clicada (pelo seu ID) e a torna visível
             document.querySelector('#table-' + categoryName).style.display = 'block';
+            
+            // 4. Encontra o botão ESPECÍFICO que foi clicado e adiciona a classe 'active' para destacá-lo
             document.querySelector('#btn-' + categoryName).classList.add('active');
         }
+
+        // Este código roda automaticamente assim que a página termina de carregar
         document.addEventListener('DOMContentLoaded', function() {
+            // Encontra o primeiro botão do menu de categorias
             const firstButton = document.querySelector('.menu button');
-            if (firstButton) { firstButton.click(); }
+            // Se um botão for encontrado, simula um clique nele para que a página não comece vazia
+            if (firstButton) { 
+                firstButton.click(); 
+            }
         });
     </script>
 </body>
