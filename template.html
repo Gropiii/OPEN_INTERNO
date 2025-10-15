@@ -61,25 +61,23 @@
         .wod-header { font-size: 1.1em; }
         .sub-header { background-color: #f16666 !important; font-size: 0.9em; }
         
-        /* Estilo para as linhas ÍMPARES (que a DataTables marca com a classe 'odd') */
-        table.dataTable tbody tr.odd {
-            background-color: #000000 !important; /* Fundo preto */
-            color: #ffffff !important; /* Texto branco */
-        }
+        table.dataTable tbody tr.odd { background-color: #000000 !important; color: #ffffff !important; }
+        table.dataTable tbody tr.even { background-color: #2e2d2d !important; color: #ffffff !important; }
 
-        /* Estilo para as linhas PARES (que a DataTables marca com a classe 'even') */
-        table.dataTable tbody tr.even {
-            background-color: #2e2d2d !important; /* Fundo cinza escuro */
-            color: #ffffff !important; /* Texto branco */
+        .rank, .total-points { font-weight: bold; }
+
+        /* Estilo para o ícone da medalha */
+        .medal {
+            margin-left: 8px;
+            font-size: 1.2em;
         }
         
-        .rank, .total-points { font-weight: bold; }
         .points { color: #ffffff; font-weight: bold; font-size: 0.9em; }
         .result { color: #ffffff; font-size: 1em; }
         .wod-cat { font-size: 0.75em; color: #888; font-weight: bold; margin-left: 4px; }
         .category-table { display: none; }
 
-        /* Container para o rodapé que usará Flexbox */
+        /* Container para o rodapé */
         .footer-container {
             display: flex;
             justify-content: space-between;
@@ -150,19 +148,26 @@
                     <tbody>
                         {% for atleta in atletas %}
                         <tr>
-                            <td class="rank">{{ atleta['Rank'] | int }}</td>
+                            <td class="rank" data-sort="{{ atleta['Rank'] }}">
+                                {{ atleta['Rank'] | int }}
+                                {% if atleta['Rank'] == 1 %}
+                                    <span class="medal">🥇</span>
+                                {% elif atleta['Rank'] == 2 %}
+                                    <span class="medal">🥈</span>
+                                {% elif atleta['Rank'] == 3 %}
+                                    <span class="medal">🥉</span>
+                                {% endif %}
+                            </td>
                             <td>{{ atleta['Atleta'] }}</td>
                             {% for wod_base in wods_base_names %}
                                 <td class="points">{{ atleta[wod_base + '_Pontos'] | int }}</td>
                                 <td class="result">
                                     {% set result_value = atleta[wod_base + '_Resultado'] %}
-                                    
                                     {% if wod_base.lower().endswith('_reps') and result_value != '--' %}
                                         {{ result_value | int }}
                                     {% else %}
                                         {{ result_value }}
                                     {% endif %}
-                                    
                                     <span class="wod-cat">({{ atleta[wod_base + '_Categoria'] }})</span>
                                 </td>
                             {% endfor %}
