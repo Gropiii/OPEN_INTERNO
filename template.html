@@ -158,6 +158,7 @@
                                     <span class="medal">🥉</span>
                                 {% endif %}
                             </td>
+                            
                             <td>{{ atleta['Atleta'] }}</td>
                             {% for wod_base in wods_base_names %}
                                 <td class="points">{{ atleta[wod_base + '_Pontos'] | int }}</td>
