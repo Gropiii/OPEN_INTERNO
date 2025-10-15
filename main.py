@@ -40,7 +40,6 @@ for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
 
         df_wod_full = df_category_raw[['Atleta', resultado_col, categoria_col]].copy()
         
-        # Filtra apenas os atletas que TÊM um resultado preenchido.
         df_wod_participantes = df_wod_full.dropna(subset=[resultado_col]).copy()
 
         if df_wod_participantes.empty:
@@ -60,34 +59,24 @@ for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
             else:
                 df_wod_participantes['Resultado_Num'] = df_wod_participantes['Resultado']
 
-            # --- ### INÍCIO DA NOVA LÓGICA DE 3 CATEGORIAS ### ---
-
-            # 1. Separa os participantes em três grupos: RX, INT e SC.
+            # Lógica de 3 categorias: RX > INT > SC.
             rx_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.lower() == 'rx'].copy()
             int_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.lower() == 'int'].copy()
             sc_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.lower() == 'sc'].copy()
 
-            # 2. Rankeia cada grupo individualmente.
             rx_results[pontos_col] = rx_results['Resultado_Num'].rank(method='min', ascending=is_time)
             int_results[pontos_col] = int_results['Resultado_Num'].rank(method='min', ascending=is_time)
             sc_results[pontos_col] = sc_results['Resultado_Num'].rank(method='min', ascending=is_time)
             
-            # 3. Aplica os "offsets" para criar a hierarquia RX > INT > SC.
             rx_count = len(rx_results)
             int_count = len(int_results)
 
-            # Adiciona o número de atletas RX à pontuação dos atletas INT.
             if rx_count > 0:
                 int_results[pontos_col] = int_results[pontos_col] + rx_count
-            
-            # Adiciona o número de atletas RX e INT à pontuação dos atletas SC.
             if rx_count > 0 or int_count > 0:
                 sc_results[pontos_col] = sc_results[pontos_col] + rx_count + int_count
 
-            # 4. Junta os três grupos rankeados em um único DataFrame.
             df_wod_ranked = pd.concat([rx_results, int_results, sc_results])
-            
-            # --- ### FIM DA NOVA LÓGICA ### ---
 
         # Junta os dados rankeados de volta na lista COMPLETA de atletas.
         df_leaderboard = pd.merge(df_leaderboard, df_wod_ranked[['Atleta', 'Resultado', 'Categoria_WOD', pontos_col]], on='Atleta', how='left')
@@ -110,20 +99,28 @@ for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
         placement_col_name = f'placements_{i}'
         df_leaderboard[placement_col_name] = (df_leaderboard[pontos_cols] == i).sum(axis=1)
 
+    # Cria a lista de critérios para a ordenação final.
     sort_by_columns = ['Total Pontos']
-    sort_ascending_order = [True]
+    sort_ascending_order = [True] # Menor pontuação é melhor.
 
     for i in range(1, max_placements + 1):
         placement_col_name = f'placements_{i}'
         sort_by_columns.append(placement_col_name)
-        sort_ascending_order.append(False)
+        sort_ascending_order.append(False) # Mais colocações altas é melhor.
         
+    # --- ### INÍCIO DA NOVA LÓGICA DE DESEMPATE ALFABÉTICO ### ---
+    # Adiciona o nome do atleta como o critério FINAL de desempate para garantir uma ordem única.
+    sort_by_columns.append('Atleta')
+    sort_ascending_order.append(True) # 'True' para ordem ascendente (A-Z).
+    # --- ### FIM DA NOVA LÓGICA ### ---
+
+    # Aplica a ordenação multi-critério para resolver todos os empates.
     df_classificado = df_leaderboard.sort_values(
         by=sort_by_columns,
         ascending=sort_ascending_order
     )
     
-    # Adiciona a coluna de Rank final.
+    # Adiciona a coluna de Rank final após a classificação correta.
     df_classificado['Rank'] = range(1, len(df_classificado) + 1)
     
     all_categories_data[category_name] = df_classificado.to_dict(orient='records')
@@ -143,4 +140,4 @@ html_gerado = template.render(
 with open('index.html', 'w', encoding='utf-8') as f:
     f.write(html_gerado)
 
-print(f"Tabela gerada com sucesso com 3 categorias (RX, INT, SC)!")
+print(f"Tabela gerada com sucesso!")

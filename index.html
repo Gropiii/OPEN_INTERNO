@@ -61,32 +61,36 @@
         .wod-header { font-size: 1.1em; }
         .sub-header { background-color: #f16666 !important; font-size: 0.9em; }
         
-        /* ### INÍCIO DA CORREÇÃO DEFINITIVA DO EFEITO ZEBRA ### */
-
-        /* A DataTables adiciona classes 'odd' e 'even' às linhas da tabela. */
-        /* Vamos estilizar essas classes diretamente para garantir que o nosso estilo vença. */
-        /* Esta abordagem é mais específica e robusta que o 'nth-child'. */
-
-        /* Estilo para as linhas ÍMPARES (que a DataTables marca com a classe 'odd') */
-        table.dataTable tbody tr.odd {
-            background-color: #000000 !important; /* Fundo preto */
-            color: #ffffff !important; /* Texto branco */
-        }
-
-        /* Estilo para as linhas PARES (que a DataTables marca com a classe 'even') */
-        table.dataTable tbody tr.even {
-            background-color: #2e2d2d !important; /* Fundo cinza escuro */
-            color: #ffffff !important; /* Texto branco */
-        }
-        
-        /* ### FIM DA CORREÇÃO DEFINITIVA DO EFEITO ZEBRA ### */
+        table.dataTable tbody tr.odd { background-color: #000000 !important; color: #ffffff !important; }
+        table.dataTable tbody tr.even { background-color: #2e2d2d !important; color: #ffffff !important; }
 
         .rank, .total-points { font-weight: bold; }
         .points { color: #ffffff; font-weight: bold; font-size: 0.9em; }
         .result { color: #ffffff; font-size: 1em; }
         .wod-cat { font-size: 0.75em; color: #888; font-weight: bold; margin-left: 4px; }
-        .footer { text-align: center; margin-top: 20px; font-size: 0.8em; color: #bbb3b3; }
         .category-table { display: none; }
+
+        /* --- ### INÍCIO DA MUDANÇA (CSS) ### --- */
+
+        /* NOVO: Container para o rodapé que usará Flexbox */
+        .footer-container {
+            display: flex;
+            justify-content: space-between; /* Empurra os itens para as extremidades */
+            align-items: center; /* Alinha verticalmente */
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #444; /* Adiciona uma linha sutil acima do rodapé */
+            font-size: 0.8em;
+            color: #bbb3b3;
+        }
+
+        /* NOVO: Estilo para a assinatura, tornando-a discreta */
+        .signature {
+            font-style: italic; /* Deixa o texto em itálico */
+        }
+
+        /* ### FIM DA MUDANÇA (CSS) ### */
+
 
         /* --- OTIMIZAÇÃO PARA CELULARES (DESIGN RESPONSIVO) --- */
         
@@ -98,6 +102,12 @@
             h1 { font-size: 1.8em; }
             .menu button { padding: 8px 10px; font-size: 14px; margin: 0 2px; }
             th, td { padding: 6px 5px; font-size: 0.85em; }
+
+            /* NOVO: No mobile, o rodapé é empilhado e centralizado */
+            .footer-container {
+                flex-direction: column;
+                gap: 5px;
+            }
         }
     </style>
 </head>
@@ -159,7 +169,7 @@
                         
                         <tr>
                             <td class="rank">1</td>
-                            <td>Carol Ussier</td>
+                            <td>Ana Bia</td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
@@ -190,7 +200,7 @@
                         
                         <tr>
                             <td class="rank">2</td>
-                            <td>Má</td>
+                            <td>Carol Ussier</td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
@@ -221,7 +231,7 @@
                         
                         <tr>
                             <td class="rank">3</td>
-                            <td>Ana Bia</td>
+                            <td>Má</td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
@@ -323,37 +333,6 @@
                         
                         <tr>
                             <td class="rank">1</td>
-                            <td>Paulinho</td>
-                            
-                                <td class="points">1</td>
-                                <td class="result">
-                                    -- 
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">1</td>
-                                <td class="result">
-                                    -- 
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">1</td>
-                                <td class="result">
-                                    -- 
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">1</td>
-                                <td class="result">
-                                    -- 
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">4</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank">2</td>
                             <td>Andrezão</td>
                             
                                 <td class="points">1</td>
@@ -384,8 +363,39 @@
                         </tr>
                         
                         <tr>
+                            <td class="rank">2</td>
+                            <td>Bydão</td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                                <td class="points">1</td>
+                                <td class="result">
+                                    -- 
+                                    <span class="wod-cat">(--)</span>
+                                </td>
+                            
+                            <td class="total-points">4</td>
+                        </tr>
+                        
+                        <tr>
                             <td class="rank">3</td>
-                            <td>Thi</td>
+                            <td>Paulinho</td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
@@ -447,7 +457,7 @@
                         
                         <tr>
                             <td class="rank">5</td>
-                            <td>Bydão</td>
+                            <td>Thi</td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
@@ -480,12 +490,13 @@
                 </table>
             </div>
          
-<<<<<<< HEAD
-        <p class="footer">Última atualização: 15/10/2025 11:06:06</p>
-=======
-        <p class="footer">Última atualização: 13/10/2025 14:46:36</p>
->>>>>>> 03cbdfefb5a3f38201822d441c5d01574f28003d
-    </div>
+        
+        <div class="footer-container">
+            <p class="last-updated">Última atualização: 15/10/2025 14:31:57</p>
+            <p class="signature">By: Lucas Pereira</p>
+        </div>
+
+        </div>
 
     <script>
         // Função para mostrar a categoria selecionada e inicializar a DataTables
