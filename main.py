@@ -3,8 +3,10 @@ from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 import pytz
 import warnings
+import numpy as np
+import time # NOVO: Importa a biblioteca 'time' para gerar o cache buster.
 
-# Ignora especificamente o aviso de "downcasting" do Pandas para uma saída limpa.
+# Ignora avisos informativos para uma saída limpa no terminal.
 warnings.filterwarnings(
     "ignore",
     category=FutureWarning,
@@ -13,11 +15,21 @@ warnings.filterwarnings(
 
 # --- Configuração ---
 # O link para a sua planilha do Google Sheets.
-URL_SHEETS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQU4WYxeZNQ1QDxTuIwx6cOTz1u_ZRpPJmmrS0Lepmfw_MkcNMmoxuGLPkn9OBIDWfHcPc2CJXMKLXv/pub?gid=0&single=true&output=csv'
+URL_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQU4WYxeZNQ1QDxTuIwx6cOTz1u_ZRpPJmmrS0Lepmfw_MkcNMmoxuGLPkn9OBIDWfHcPc2CJXMKLXv/pub?gid=0&single=true&output=csv'
+
+# --- ### INÍCIO DA CORREÇÃO DEFINITIVA DE CACHE ### ---
+# Adiciona um "cache buster" à URL. Isso anexa um parâmetro com o timestamp atual
+# (ex: &cache_bust=1678886400), fazendo com que a URL seja única a cada execução.
+# Isso força o download de uma cópia nova dos dados, ignorando qualquer cache.
+URL_SHEETS = f"{URL_BASE}&cache_bust={int(time.time())}"
+# --- ### FIM DA CORREÇÃO DEFINITIVA DE CACHE ### ---
+
 
 # --- Lógica do Campeonato ---
 try:
     df_raw = pd.read_csv(URL_SHEETS)
+    # Limpa as células vazias ou com apenas espaços, garantindo que o .dropna() funcione.
+    df_raw.replace(r'^\s*$', np.nan, regex=True, inplace=True)
 except Exception as e:
     print(f"Erro ao ler dados da planilha: {e}")
     exit()
@@ -43,12 +55,13 @@ for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
         df_wod_participantes = df_wod_full.dropna(subset=[resultado_col]).copy()
 
         if df_wod_participantes.empty:
-            penalty_score = 1
+            penalty_score = 0
             df_wod_ranked = pd.DataFrame(columns=['Atleta', 'Resultado', 'Categoria_WOD', pontos_col])
         else:
             penalty_score = len(df_wod_participantes) + 1
             
             df_wod_participantes.rename(columns={resultado_col: 'Resultado', categoria_col: 'Categoria_WOD'}, inplace=True)
+            df_wod_participantes['Categoria_WOD'].fillna('SC', inplace=True)
             df_wod_participantes['Categoria_WOD'] = df_wod_participantes['Categoria_WOD'].astype(str)
             
             metrica = wod_base.split('_')[-1].lower()
@@ -99,30 +112,26 @@ for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
         placement_col_name = f'placements_{i}'
         df_leaderboard[placement_col_name] = (df_leaderboard[pontos_cols] == i).sum(axis=1)
 
-    # Cria a lista de critérios para a ordenação final.
     sort_by_columns = ['Total Pontos']
-    sort_ascending_order = [True] # Menor pontuação é melhor.
+    sort_ascending_order = [True]
 
     for i in range(1, max_placements + 1):
         placement_col_name = f'placements_{i}'
         sort_by_columns.append(placement_col_name)
-        sort_ascending_order.append(False) # Mais colocações altas é melhor.
+        sort_ascending_order.append(False)
         
-    # --- ### INÍCIO DA NOVA LÓGICA DE DESEMPATE ALFABÉTICO ### ---
-    # Adiciona o nome do atleta como o critério FINAL de desempate para garantir uma ordem única.
     sort_by_columns.append('Atleta')
-    sort_ascending_order.append(True) # 'True' para ordem ascendente (A-Z).
-    # --- ### FIM DA NOVA LÓGICA ### ---
+    sort_ascending_order.append(True)
 
-    # Aplica a ordenação multi-critério para resolver todos os empates.
     df_classificado = df_leaderboard.sort_values(
         by=sort_by_columns,
         ascending=sort_ascending_order
     )
     
-    # Adiciona a coluna de Rank final após a classificação correta.
+    # Adiciona a coluna de Rank final.
     df_classificado['Rank'] = range(1, len(df_classificado) + 1)
     
+    # Guarda os dados processados da categoria no dicionário principal.
     all_categories_data[category_name] = df_classificado.to_dict(orient='records')
 
 # --- Geração do HTML ---

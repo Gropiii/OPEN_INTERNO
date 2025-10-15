@@ -61,36 +61,40 @@
         .wod-header { font-size: 1.1em; }
         .sub-header { background-color: #f16666 !important; font-size: 0.9em; }
         
-        table.dataTable tbody tr.odd { background-color: #000000 !important; color: #ffffff !important; }
-        table.dataTable tbody tr.even { background-color: #2e2d2d !important; color: #ffffff !important; }
+        /* Estilo para as linhas ÍMPARES (que a DataTables marca com a classe 'odd') */
+        table.dataTable tbody tr.odd {
+            background-color: #000000 !important; /* Fundo preto */
+            color: #ffffff !important; /* Texto branco */
+        }
 
+        /* Estilo para as linhas PARES (que a DataTables marca com a classe 'even') */
+        table.dataTable tbody tr.even {
+            background-color: #2e2d2d !important; /* Fundo cinza escuro */
+            color: #ffffff !important; /* Texto branco */
+        }
+        
         .rank, .total-points { font-weight: bold; }
         .points { color: #ffffff; font-weight: bold; font-size: 0.9em; }
         .result { color: #ffffff; font-size: 1em; }
         .wod-cat { font-size: 0.75em; color: #888; font-weight: bold; margin-left: 4px; }
         .category-table { display: none; }
 
-        /* --- ### INÍCIO DA MUDANÇA (CSS) ### --- */
-
-        /* NOVO: Container para o rodapé que usará Flexbox */
+        /* Container para o rodapé que usará Flexbox */
         .footer-container {
             display: flex;
-            justify-content: space-between; /* Empurra os itens para as extremidades */
-            align-items: center; /* Alinha verticalmente */
+            justify-content: space-between;
+            align-items: center;
             margin-top: 20px;
             padding-top: 10px;
-            border-top: 1px solid #444; /* Adiciona uma linha sutil acima do rodapé */
+            border-top: 1px solid #444;
             font-size: 0.8em;
             color: #bbb3b3;
         }
 
-        /* NOVO: Estilo para a assinatura, tornando-a discreta */
+        /* Estilo para a assinatura */
         .signature {
-            font-style: italic; /* Deixa o texto em itálico */
+            font-style: italic;
         }
-
-        /* ### FIM DA MUDANÇA (CSS) ### */
-
 
         /* --- OTIMIZAÇÃO PARA CELULARES (DESIGN RESPONSIVO) --- */
         
@@ -102,12 +106,7 @@
             h1 { font-size: 1.8em; }
             .menu button { padding: 8px 10px; font-size: 14px; margin: 0 2px; }
             th, td { padding: 6px 5px; font-size: 0.85em; }
-
-            /* NOVO: No mobile, o rodapé é empilhado e centralizado */
-            .footer-container {
-                flex-direction: column;
-                gap: 5px;
-            }
+            .footer-container { flex-direction: column; gap: 5px; }
         }
     </style>
 </head>
@@ -156,7 +155,14 @@
                             {% for wod_base in wods_base_names %}
                                 <td class="points">{{ atleta[wod_base + '_Pontos'] | int }}</td>
                                 <td class="result">
-                                    {{ atleta[wod_base + '_Resultado'] }} 
+                                    {% set result_value = atleta[wod_base + '_Resultado'] %}
+                                    
+                                    {% if wod_base.lower().endswith('_reps') and result_value != '--' %}
+                                        {{ result_value | int }}
+                                    {% else %}
+                                        {{ result_value }}
+                                    {% endif %}
+                                    
                                     <span class="wod-cat">({{ atleta[wod_base + '_Categoria'] }})</span>
                                 </td>
                             {% endfor %}
@@ -173,7 +179,7 @@
             <p class="signature">By: Lucas Pereira</p>
         </div>
 
-        </div>
+    </div>
 
     <script>
         // Função para mostrar a categoria selecionada e inicializar a DataTables
