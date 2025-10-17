@@ -4,7 +4,7 @@ from datetime import datetime
 import pytz
 import warnings
 import numpy as np
-import time # NOVO: Importa a biblioteca 'time' para gerar o cache buster.
+import time
 
 # Ignora avisos informativos para uma saída limpa no terminal.
 warnings.filterwarnings(
@@ -14,37 +14,25 @@ warnings.filterwarnings(
 )
 
 # --- Configuração ---
-# O link para a sua planilha do Google Sheets.
 URL_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQU4WYxeZNQ1QDxTuIwx6cOTz1u_ZRpPJmmrS0Lepmfw_MkcNMmoxuGLPkn9OBIDWfHcPc2CJXMKLXv/pub?gid=0&single=true&output=csv'
-
-# --- ### INÍCIO DA CORREÇÃO DEFINITIVA DE CACHE ### ---
-# Adiciona um "cache buster" à URL. Isso anexa um parâmetro com o timestamp atual
-# (ex: &cache_bust=1678886400), fazendo com que a URL seja única a cada execução.
-# Isso força o download de uma cópia nova dos dados, ignorando qualquer cache.
 URL_SHEETS = f"{URL_BASE}&cache_bust={int(time.time())}"
-# --- ### FIM DA CORREÇÃO DEFINITIVA DE CACHE ### ---
-
 
 # --- Lógica do Campeonato ---
 try:
     df_raw = pd.read_csv(URL_SHEETS)
-    # Limpa as células vazias ou com apenas espaços, garantindo que o .dropna() funcione.
     df_raw.replace(r'^\s*$', np.nan, regex=True, inplace=True)
 except Exception as e:
     print(f"Erro ao ler dados da planilha: {e}")
     exit()
 
-# Identifica os nomes base dos WODs de forma dinâmica.
 wod_base_names = sorted(list(set([col.replace('_Resultado', '') for col in df_raw.columns if col.endswith('_Resultado')])))
 
 all_categories_data = {}
 
-# 1. Agrupa os dados pela 'Categoria_Geral'.
 for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
     
     df_leaderboard = pd.DataFrame({'Atleta': df_category_raw['Atleta']})
     
-    # 2. Itera sobre cada WOD para calcular os pontos.
     for wod_base in wod_base_names:
         resultado_col = f'{wod_base}_Resultado'
         categoria_col = f'{wod_base}_Categoria'
@@ -72,10 +60,13 @@ for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
             else:
                 df_wod_participantes['Resultado_Num'] = df_wod_participantes['Resultado']
 
-            # Lógica de 3 categorias: RX > INT > SC.
-            rx_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.lower() == 'rx'].copy()
-            int_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.lower() == 'int'].copy()
-            sc_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.lower() == 'sc'].copy()
+            # --- ### INÍCIO DA CORREÇÃO DEFINITIVA ### ---
+            # A função .str.strip() remove os espaços em branco do início e do fim antes de comparar.
+            # Isso torna a verificação robusta contra erros de digitação na planilha.
+            rx_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.strip().str.lower() == 'rx'].copy()
+            int_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.strip().str.lower() == 'int'].copy()
+            sc_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.strip().str.lower() == 'sc'].copy()
+            # --- ### FIM DA CORREÇÃO DEFINITIVA ### ---
 
             rx_results[pontos_col] = rx_results['Resultado_Num'].rank(method='min', ascending=is_time)
             int_results[pontos_col] = int_results['Resultado_Num'].rank(method='min', ascending=is_time)
@@ -91,22 +82,15 @@ for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
 
             df_wod_ranked = pd.concat([rx_results, int_results, sc_results])
 
-        # Junta os dados rankeados de volta na lista COMPLETA de atletas.
         df_leaderboard = pd.merge(df_leaderboard, df_wod_ranked[['Atleta', 'Resultado', 'Categoria_WOD', pontos_col]], on='Atleta', how='left')
-        
-        # Aplica a pontuação de penalidade e converte a coluna para inteiro.
         df_leaderboard[pontos_col] = df_leaderboard[pontos_col].fillna(penalty_score).astype(int)
-
-        # Preenche os resultados e categorias vazios com "--".
         df_leaderboard.rename(columns={'Resultado': resultado_col, 'Categoria_WOD': categoria_col}, inplace=True)
         df_leaderboard[resultado_col].fillna("--", inplace=True)
         df_leaderboard[categoria_col].fillna("--", inplace=True)
         
-    # Calcula o total de pontos.
     pontos_cols = [f'{wod}_Pontos' for wod in wod_base_names]
     df_leaderboard['Total Pontos'] = df_leaderboard[pontos_cols].sum(axis=1)
     
-    # Lógica de desempate em cascata.
     max_placements = len(df_leaderboard)
     for i in range(1, max_placements + 1):
         placement_col_name = f'placements_{i}'
@@ -128,10 +112,8 @@ for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
         ascending=sort_ascending_order
     )
     
-    # Adiciona a coluna de Rank final.
     df_classificado['Rank'] = range(1, len(df_classificado) + 1)
     
-    # Guarda os dados processados da categoria no dicionário principal.
     all_categories_data[category_name] = df_classificado.to_dict(orient='records')
 
 # --- Geração do HTML ---
