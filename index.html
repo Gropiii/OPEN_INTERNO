@@ -10,7 +10,7 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <style>
-        /* --- ESTILOS GERAIS PARA DESKTOP (TELA GRANDE) --- */
+        /* --- ESTILOS GERAIS (AGORA APLICADOS A TODAS AS TELAS) --- */
         
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -18,13 +18,15 @@
             color: #333;
         }
         
+        /* A caixa principal que envolve todo o conteúdo */
+        /* A propriedade 'overflow-x: auto;' é a chave para a rolagem horizontal em telas pequenas */
         .container {
             max-width: 100%;
             margin: 20px auto;
             padding: 20px;
             background-color: #000000;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            overflow-x: auto;
+            overflow-x: auto; 
         }
 
         .logo-container {
@@ -66,18 +68,13 @@
 
         .rank, .total-points { font-weight: bold; }
 
-        /* Estilo para o ícone da medalha */
-        .medal {
-            margin-left: 8px;
-            font-size: 1.2em;
-        }
+        .medal { margin-left: 8px; font-size: 1.2em; }
         
         .points { color: #ffffff; font-weight: bold; font-size: 0.9em; }
         .result { color: #ffffff; font-size: 1em; }
         .wod-cat { font-size: 0.75em; color: #888; font-weight: bold; margin-left: 4px; }
         .category-table { display: none; }
 
-        /* Container para o rodapé */
         .footer-container {
             display: flex;
             justify-content: space-between;
@@ -89,23 +86,11 @@
             color: #bbb3b3;
         }
 
-        /* Estilo para a assinatura */
-        .signature {
-            font-style: italic;
-        }
+        .signature { font-style: italic; }
 
-        /* --- OTIMIZAÇÃO PARA CELULARES (DESIGN RESPONSIVO) --- */
-        
-        @media only screen and (max-width: 768px) {
-            body { font-size: 14px; }
-            .container { padding: 10px; margin: 10px auto; }
-            .logo-container { flex-direction: column; justify-content: center; gap: 15px; }
-            .logo-item { max-height: 100px; }
-            h1 { font-size: 1.8em; }
-            .menu button { padding: 8px 10px; font-size: 14px; margin: 0 2px; }
-            th, td { padding: 6px 5px; font-size: 0.85em; }
-            .footer-container { flex-direction: column; gap: 5px; }
-        }
+        /* --- BLOCO DE OTIMIZAÇÃO PARA CELULARES REMOVIDO --- */
+        /* O bloco @media que estava aqui foi deletado. */
+
     </style>
 </head>
 <body>
@@ -172,13 +157,13 @@
                                 
                             </td>
                             
-                            <td>Má</td>
+                            <td>Jaque</td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
                                     
                                     
-                                        135
+                                        194
                                     
                                     <span class="wod-cat">(Rx)</span>
                                 </td>
@@ -221,13 +206,13 @@
                                 
                             </td>
                             
-                            <td>Ana Bia</td>
+                            <td>Samara</td>
                             
                                 <td class="points">2</td>
                                 <td class="result">
                                     
                                     
-                                        133
+                                        157
                                     
                                     <span class="wod-cat">(Rx)</span>
                                 </td>
@@ -270,13 +255,13 @@
                                 
                             </td>
                             
-                            <td>Lilian</td>
+                            <td>Bia</td>
                             
                                 <td class="points">3</td>
                                 <td class="result">
                                     
                                     
-                                        113
+                                        137
                                     
                                     <span class="wod-cat">(Rx)</span>
                                 </td>
@@ -317,13 +302,13 @@
                                 
                             </td>
                             
-                            <td>Carol </td>
+                            <td>Má</td>
                             
                                 <td class="points">4</td>
                                 <td class="result">
                                     
                                     
-                                        111
+                                        135
                                     
                                     <span class="wod-cat">(Rx)</span>
                                 </td>
@@ -364,13 +349,13 @@
                                 
                             </td>
                             
-                            <td>Priscila</td>
+                            <td>Ana Bia</td>
                             
                                 <td class="points">5</td>
                                 <td class="result">
                                     
                                     
-                                        105
+                                        133
                                     
                                     <span class="wod-cat">(Rx)</span>
                                 </td>
@@ -411,13 +396,13 @@
                                 
                             </td>
                             
-                            <td>Gabi Zola</td>
+                            <td>Lilian</td>
                             
                                 <td class="points">6</td>
                                 <td class="result">
                                     
                                     
-                                        81
+                                        113
                                     
                                     <span class="wod-cat">(Rx)</span>
                                 </td>
@@ -458,15 +443,15 @@
                                 
                             </td>
                             
-                            <td>Gaby</td>
+                            <td>Carol </td>
                             
                                 <td class="points">7</td>
                                 <td class="result">
                                     
                                     
-                                        130
+                                        111
                                     
-                                    <span class="wod-cat">(Int)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -505,15 +490,15 @@
                                 
                             </td>
                             
-                            <td>Leila</td>
+                            <td>Nikole</td>
                             
-                                <td class="points">8</td>
+                                <td class="points">7</td>
                                 <td class="result">
                                     
                                     
-                                        127
+                                        111
                                     
-                                    <span class="wod-cat">(Int)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -543,7 +528,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">8</td>
+                            <td class="total-points">7</td>
                         </tr>
                         
                         <tr>
@@ -552,15 +537,15 @@
                                 
                             </td>
                             
-                            <td>Paolla</td>
+                            <td>Priscila</td>
                             
                                 <td class="points">9</td>
                                 <td class="result">
                                     
                                     
-                                        116
+                                        105
                                     
-                                    <span class="wod-cat">(Int)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -599,15 +584,15 @@
                                 
                             </td>
                             
-                            <td>Milena</td>
+                            <td>Michelle</td>
                             
                                 <td class="points">10</td>
                                 <td class="result">
                                     
                                     
-                                        115
+                                        93
                                     
-                                    <span class="wod-cat">(Int)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -646,21 +631,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Luciana</td>
+                            <td>Kakau</td>
                             
                                 <td class="points">11</td>
-=======
-                            <td>Adelaine</td>
-                            
-                                <td class="points">12</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
                                 <td class="result">
                                     
                                     
-                                        105
+                                        82
                                     
-                                    <span class="wod-cat">(Sc )</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -690,11 +669,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-<<<<<<< HEAD
                             <td class="total-points">11</td>
-=======
-                            <td class="total-points">12</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
                         </tr>
                         
                         <tr>
@@ -703,19 +678,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Adelaine</td>
-=======
-                            <td>Aline</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Gabi Zola</td>
                             
                                 <td class="points">12</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        81
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -754,19 +725,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Aline</td>
-=======
-                            <td>Ana Carol</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Silvana</td>
                             
-                                <td class="points">12</td>
+                                <td class="points">13</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        65
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -796,7 +763,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">12</td>
+                            <td class="total-points">13</td>
                         </tr>
                         
                         <tr>
@@ -805,19 +772,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Ana Carol</td>
-=======
-                            <td>Betinha</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Gaby</td>
                             
-                                <td class="points">12</td>
+                                <td class="points">14</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        130
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Int)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -847,7 +810,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">12</td>
+                            <td class="total-points">14</td>
                         </tr>
                         
                         <tr>
@@ -856,19 +819,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Betinha</td>
-=======
-                            <td>Bia</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Leila</td>
                             
-                                <td class="points">12</td>
+                                <td class="points">15</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        127
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Int)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -898,7 +857,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">12</td>
+                            <td class="total-points">15</td>
                         </tr>
                         
                         <tr>
@@ -907,19 +866,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Bia</td>
-=======
-                            <td>Bruna Cursino</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Paolla</td>
                             
-                                <td class="points">12</td>
+                                <td class="points">16</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        116
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Int)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -949,7 +904,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">12</td>
+                            <td class="total-points">16</td>
                         </tr>
                         
                         <tr>
@@ -958,19 +913,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Bruna Cursino</td>
-=======
-                            <td>Carina</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Milena</td>
                             
-                                <td class="points">12</td>
+                                <td class="points">17</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        115
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Int)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -1000,7 +951,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">12</td>
+                            <td class="total-points">17</td>
                         </tr>
                         
                         <tr>
@@ -1009,19 +960,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Carina</td>
-=======
                             <td>Dani Balbo</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
                             
-                                <td class="points">12</td>
+                                <td class="points">18</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        111
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Int)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -1051,7 +998,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">12</td>
+                            <td class="total-points">18</td>
                         </tr>
                         
                         <tr>
@@ -1060,19 +1007,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Dani Balbo</td>
-=======
-                            <td>Elisa</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Ana Carol</td>
                             
-                                <td class="points">12</td>
+                                <td class="points">19</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        93
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Int)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -1102,7 +1045,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">12</td>
+                            <td class="total-points">19</td>
                         </tr>
                         
                         <tr>
@@ -1111,19 +1054,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Elisa</td>
-=======
-                            <td>Fer M</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Gab</td>
                             
-                                <td class="points">12</td>
+                                <td class="points">20</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        83
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Int)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -1153,7 +1092,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">12</td>
+                            <td class="total-points">20</td>
                         </tr>
                         
                         <tr>
@@ -1162,172 +1101,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Fer M</td>
-=======
-                            <td>Gab</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
-                            
-                                <td class="points">12</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">12</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="22">
-                                22
-                                
-                            </td>
-                            
-<<<<<<< HEAD
-                            <td>Gab</td>
-=======
-                            <td>Jaque</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
-                            
-                                <td class="points">12</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">12</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="23">
-                                23
-                                
-                            </td>
-                            
-<<<<<<< HEAD
-                            <td>Jaque</td>
-=======
-                            <td>Kakau</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
-                            
-                                <td class="points">12</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">12</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="24">
-                                24
-                                
-                            </td>
-                            
-<<<<<<< HEAD
-                            <td>Kakau</td>
-=======
                             <td>Luciana</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
                             
-                                <td class="points">12</td>
+                                <td class="points">21</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        105
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Sc)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -1357,289 +1139,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">12</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="25">
-                                25
-                                
-                            </td>
-                            
-                            <td>Marília</td>
-                            
-                                <td class="points">12</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">12</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="26">
-                                26
-                                
-                            </td>
-                            
-                            <td>Michelle</td>
-                            
-                                <td class="points">12</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">12</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="27">
-                                27
-                                
-                            </td>
-                            
-                            <td>Nikole</td>
-                            
-                                <td class="points">12</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">12</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="28">
-                                28
-                                
-                            </td>
-                            
-                            <td>Rosangela</td>
-                            
-                                <td class="points">12</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">12</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="29">
-                                29
-                                
-                            </td>
-                            
-                            <td>Samara</td>
-                            
-                                <td class="points">12</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">12</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="30">
-                                30
-                                
-                            </td>
-                            
-                            <td>Silvana</td>
-                            
-                                <td class="points">12</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">12</td>
+                            <td class="total-points">21</td>
                         </tr>
                          
                     </tbody>
@@ -1690,13 +1190,13 @@
                                 
                             </td>
                             
-                            <td>Guto</td>
+                            <td>Thi</td>
                             
                                 <td class="points">1</td>
                                 <td class="result">
                                     
                                     
-                                        137
+                                        175
                                     
                                     <span class="wod-cat">(Rx)</span>
                                 </td>
@@ -1739,13 +1239,13 @@
                                 
                             </td>
                             
-                            <td>Daniel</td>
+                            <td>Matheusão</td>
                             
                                 <td class="points">2</td>
                                 <td class="result">
                                     
                                     
-                                        133
+                                        164
                                     
                                     <span class="wod-cat">(Rx)</span>
                                 </td>
@@ -1788,13 +1288,13 @@
                                 
                             </td>
                             
-                            <td>Davi</td>
+                            <td>Bydão</td>
                             
                                 <td class="points">3</td>
                                 <td class="result">
                                     
                                     
-                                        129
+                                        159
                                     
                                     <span class="wod-cat">(Rx)</span>
                                 </td>
@@ -1835,13 +1335,13 @@
                                 
                             </td>
                             
-                            <td>Andrezinho</td>
+                            <td>Pedro</td>
                             
                                 <td class="points">4</td>
                                 <td class="result">
                                     
                                     
-                                        114
+                                        152
                                     
                                     <span class="wod-cat">(Rx)</span>
                                 </td>
@@ -1882,13 +1382,13 @@
                                 
                             </td>
                             
-                            <td>Fernandinho</td>
+                            <td>Léo</td>
                             
                                 <td class="points">5</td>
                                 <td class="result">
                                     
                                     
-                                        109
+                                        150
                                     
                                     <span class="wod-cat">(Rx)</span>
                                 </td>
@@ -1929,15 +1429,15 @@
                                 
                             </td>
                             
-                            <td>Fernando S</td>
+                            <td>André</td>
                             
                                 <td class="points">6</td>
                                 <td class="result">
                                     
                                     
-                                        122
+                                        142
                                     
-                                    <span class="wod-cat">(Int)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -1976,21 +1476,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Laércio</td>
+                            <td>Guto</td>
                             
                                 <td class="points">7</td>
-=======
-                            <td>Alisson</td>
-                            
-                                <td class="points">9</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
                                 <td class="result">
                                     
                                     
-                                        127
+                                        137
                                     
-                                    <span class="wod-cat">(Sc )</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2020,11 +1514,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-<<<<<<< HEAD
                             <td class="total-points">7</td>
-=======
-                            <td class="total-points">9</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
                         </tr>
                         
                         <tr>
@@ -2033,21 +1523,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Alisson</td>
+                            <td>Daniel</td>
                             
                                 <td class="points">8</td>
-=======
-                            <td>André</td>
-                            
-                                <td class="points">9</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
                                 <td class="result">
                                     
                                     
-                                        116
+                                        133
                                     
-                                    <span class="wod-cat">(Sc)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2077,11 +1561,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-<<<<<<< HEAD
                             <td class="total-points">8</td>
-=======
-                            <td class="total-points">9</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
                         </tr>
                         
                         <tr>
@@ -2090,19 +1570,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>André</td>
-=======
-                            <td>Briet</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Davi</td>
                             
                                 <td class="points">9</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        129
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2141,19 +1617,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Briet</td>
-=======
-                            <td>Bydão</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Rafa</td>
                             
                                 <td class="points">9</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        129
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2192,19 +1664,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Bydão</td>
-=======
-                            <td>Claudio</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Paulinho</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">11</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        128
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2234,7 +1702,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">11</td>
                         </tr>
                         
                         <tr>
@@ -2243,19 +1711,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Claudio</td>
-=======
                             <td>Da Luz</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
                             
-                                <td class="points">9</td>
+                                <td class="points">12</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        120
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2285,7 +1749,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">12</td>
                         </tr>
                         
                         <tr>
@@ -2294,19 +1758,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Da Luz</td>
-=======
-                            <td>Danilo</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Andrezinho</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">13</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        114
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2336,7 +1796,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">13</td>
                         </tr>
                         
                         <tr>
@@ -2345,19 +1805,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Danilo</td>
-=======
-                            <td>Dante</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Vicente</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">13</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        114
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2387,7 +1843,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">13</td>
                         </tr>
                         
                         <tr>
@@ -2396,19 +1852,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Dante</td>
-=======
                             <td>Du</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
                             
-                                <td class="points">9</td>
+                                <td class="points">15</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        112
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2438,7 +1890,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">15</td>
                         </tr>
                         
                         <tr>
@@ -2447,19 +1899,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Du</td>
-=======
-                            <td>Edson</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Fernandinho</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">16</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        109
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2489,7 +1937,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">16</td>
                         </tr>
                         
                         <tr>
@@ -2498,19 +1946,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Edson</td>
-=======
-                            <td>Guilherme C</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Thiago</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">17</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        97
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2540,7 +1984,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">17</td>
                         </tr>
                         
                         <tr>
@@ -2549,19 +1993,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Guilherme C</td>
-=======
-                            <td>João</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Silverio</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">18</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        96
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2591,7 +2031,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">18</td>
                         </tr>
                         
                         <tr>
@@ -2600,19 +2040,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>João</td>
-=======
-                            <td>Kael</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Edson</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">19</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        84
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Rx)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2642,7 +2078,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">19</td>
                         </tr>
                         
                         <tr>
@@ -2651,19 +2087,15 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
-                            <td>Kael</td>
-=======
-                            <td>Laércio</td>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+                            <td>Fernando S</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">20</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        122
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Int)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2693,7 +2125,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">20</td>
                         </tr>
                         
                         <tr>
@@ -2702,15 +2134,15 @@
                                 
                             </td>
                             
-                            <td>Léo</td>
+                            <td>João</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">21</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        101
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Int)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2740,7 +2172,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">21</td>
                         </tr>
                         
                         <tr>
@@ -2749,15 +2181,15 @@
                                 
                             </td>
                             
-                            <td>Matheus</td>
+                            <td>Laércio</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">22</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        127
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Sc)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2787,7 +2219,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">22</td>
                         </tr>
                         
                         <tr>
@@ -2796,15 +2228,15 @@
                                 
                             </td>
                             
-                            <td>Matheusão</td>
+                            <td>Alisson</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">23</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        116
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Sc)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2834,7 +2266,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
+                            <td class="total-points">23</td>
                         </tr>
                         
                         <tr>
@@ -2843,15 +2275,15 @@
                                 
                             </td>
                             
-                            <td>Pablo</td>
+                            <td>Kael</td>
                             
-                                <td class="points">9</td>
+                                <td class="points">24</td>
                                 <td class="result">
                                     
                                     
-                                        --
+                                        106
                                     
-                                    <span class="wod-cat">(--)</span>
+                                    <span class="wod-cat">(Adp)</span>
                                 </td>
                             
                                 <td class="points">0</td>
@@ -2881,477 +2313,7 @@
                                     <span class="wod-cat">(--)</span>
                                 </td>
                             
-                            <td class="total-points">9</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="25">
-                                25
-                                
-                            </td>
-                            
-                            <td>Paulinho</td>
-                            
-                                <td class="points">9</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">9</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="26">
-                                26
-                                
-                            </td>
-                            
-                            <td>Pedro</td>
-                            
-                                <td class="points">9</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">9</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="27">
-                                27
-                                
-                            </td>
-                            
-                            <td>Rafa</td>
-                            
-                                <td class="points">9</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">9</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="28">
-                                28
-                                
-                            </td>
-                            
-                            <td>Salomão</td>
-                            
-                                <td class="points">9</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">9</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="29">
-                                29
-                                
-                            </td>
-                            
-                            <td>Silverinho</td>
-                            
-                                <td class="points">9</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">9</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="30">
-                                30
-                                
-                            </td>
-                            
-                            <td>Silverio</td>
-                            
-                                <td class="points">9</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">9</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="31">
-                                31
-                                
-                            </td>
-                            
-                            <td>Thi</td>
-                            
-                                <td class="points">9</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">9</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="32">
-                                32
-                                
-                            </td>
-                            
-                            <td>Thiago</td>
-                            
-                                <td class="points">9</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">9</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="33">
-                                33
-                                
-                            </td>
-                            
-                            <td>Vicente</td>
-                            
-                                <td class="points">9</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">9</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="34">
-                                34
-                                
-                            </td>
-                            
-                            <td>Willian</td>
-                            
-                                <td class="points">9</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">9</td>
+                            <td class="total-points">24</td>
                         </tr>
                          
                     </tbody>
@@ -3360,11 +2322,7 @@
          
         
         <div class="footer-container">
-<<<<<<< HEAD
-            <p class="last-updated">Última atualização: 17/10/2025 10:51:46</p>
-=======
-            <p class="last-updated">Última atualização: 17/10/2025 10:32:07</p>
->>>>>>> 92584dd57cb819bfd794576fdf867dd6316a13ad
+            <p class="last-updated">Última atualização: 20/10/2025 09:36:44</p>
             <p class="signature">By: Lucas Pereira</p>
         </div>
 
