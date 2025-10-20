@@ -10,7 +10,7 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <style>
-        /* --- ESTILOS GERAIS (AGORA APLICADOS A TODAS AS TELAS) --- */
+        /* --- ESTILOS GERAIS PARA DESKTOP (TELA GRANDE) --- */
         
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -18,15 +18,13 @@
             color: #333;
         }
         
-        /* A caixa principal que envolve todo o conteúdo */
-        /* A propriedade 'overflow-x: auto;' é a chave para a rolagem horizontal em telas pequenas */
+        /* MODIFICADO: Removido o 'overflow-x: auto;' daqui, pois queremos evitar a rolagem */
         .container {
             max-width: 100%;
             margin: 20px auto;
             padding: 20px;
             background-color: #000000;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            overflow-x: auto; 
         }
 
         .logo-container {
@@ -55,8 +53,23 @@
 
         /* --- ESTILOS DA TABELA DE RESULTADOS --- */
 
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 10px 12px; border: 1px solid #ddd; text-align: center; white-space: nowrap; }
+        /* MODIFICADO: Adicionado 'table-layout: fixed;' para melhor controle das colunas */
+        /* E 'word-wrap: break-word;' como um fallback para quebras de palavra */
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+            table-layout: fixed; /* Ajuda o navegador a calcular larguras de coluna de forma mais previsível */
+            word-wrap: break-word; /* Força a quebra de palavras muito longas */
+        }
+        
+        th, td { 
+            padding: 10px 12px; 
+            border: 1px solid #ddd; 
+            text-align: center; 
+            white-space: nowrap; /* Mantém o nowrap como padrão para desktop */
+        }
+
         table.dataTable th, table.dataTable td { text-align: center !important; }
         thead th { background-color: #c90707; color: #fff; }
         table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after { color: #fff !important; }
@@ -67,30 +80,36 @@
         table.dataTable tbody tr.even { background-color: #2e2d2d !important; color: #ffffff !important; }
 
         .rank, .total-points { font-weight: bold; }
-
         .medal { margin-left: 8px; font-size: 1.2em; }
-        
         .points { color: #ffffff; font-weight: bold; font-size: 0.9em; }
         .result { color: #ffffff; font-size: 1em; }
         .wod-cat { font-size: 0.75em; color: #888; font-weight: bold; margin-left: 4px; }
         .category-table { display: none; }
 
-        .footer-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #444;
-            font-size: 0.8em;
-            color: #bbb3b3;
-        }
-
+        .footer-container { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid #444; font-size: 0.8em; color: #bbb3b3; }
         .signature { font-style: italic; }
 
-        /* --- BLOCO DE OTIMIZAÇÃO PARA CELULARES REMOVIDO --- */
-        /* O bloco @media que estava aqui foi deletado. */
+        /* --- OTIMIZAÇÃO PARA CELULARES (DESIGN RESPONSIVO) --- */
+        
+        @media only screen and (max-width: 768px) {
+            body { font-size: 14px; }
+            .container { padding: 10px; margin: 10px auto; }
+            .logo-container { flex-direction: column; justify-content: center; gap: 15px; }
+            .logo-item { max-height: 100px; }
+            h1 { font-size: 1.8em; }
+            .menu button { padding: 8px 10px; font-size: 14px; margin: 0 2px; }
+            
+            /* --- ### INÍCIO DA ALTERAÇÃO ### --- */
+            th, td { 
+                padding: 5px 3px; /* Reduz ainda mais o padding */
+                font-size: 0.8em; /* Reduz ainda mais a fonte */
+                white-space: normal; /* PERMITE A QUEBRA DE LINHA DENTRO DAS CÉLULAS */
+                word-break: break-all; /* Ajuda a quebrar palavras longas se necessário */
+            }
+            /* --- ### FIM DA ALTERAÇÃO ### --- */
 
+            .footer-container { flex-direction: column; gap: 5px; }
+        }
     </style>
 </head>
 <body>
@@ -1102,10 +1121,6 @@
                             </td>
                             
                             <td>Luciana</td>
-<<<<<<< HEAD
-                            
-                                <td class="points">21</td>
-=======
                             
                                 <td class="points">21</td>
                                 <td class="result">
@@ -1144,434 +1159,6 @@
                                 </td>
                             
                             <td class="total-points">21</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="22">
-                                22
-                                
-                            </td>
-                            
-                            <td>Adelaine</td>
-                            
-                                <td class="points">22</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">22</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="23">
-                                23
-                                
-                            </td>
-                            
-                            <td>Aline</td>
-                            
-                                <td class="points">22</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">22</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="24">
-                                24
-                                
-                            </td>
-                            
-                            <td>Betinha</td>
-                            
-                                <td class="points">22</td>
->>>>>>> 109b6418315cc4bfbd10f8abe5ed376416f2381c
-                                <td class="result">
-                                    
-                                    
-                                        105
-                                    
-                                    <span class="wod-cat">(Sc)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-<<<<<<< HEAD
-                            <td class="total-points">21</td>
-=======
-                            <td class="total-points">22</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="25">
-                                25
-                                
-                            </td>
-                            
-                            <td>Bruna Cursino</td>
-                            
-                                <td class="points">22</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">22</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="26">
-                                26
-                                
-                            </td>
-                            
-                            <td>Carina</td>
-                            
-                                <td class="points">22</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">22</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="27">
-                                27
-                                
-                            </td>
-                            
-                            <td>Elisa</td>
-                            
-                                <td class="points">22</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">22</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="28">
-                                28
-                                
-                            </td>
-                            
-                            <td>Fer M</td>
-                            
-                                <td class="points">22</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">22</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="29">
-                                29
-                                
-                            </td>
-                            
-                            <td>Marília</td>
-                            
-                                <td class="points">22</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">22</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="30">
-                                30
-                                
-                            </td>
-                            
-                            <td>Rosangela</td>
-                            
-                                <td class="points">22</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">22</td>
->>>>>>> 109b6418315cc4bfbd10f8abe5ed376416f2381c
                         </tr>
                          
                     </tbody>
@@ -2707,11 +2294,7 @@
                                 
                             </td>
                             
-<<<<<<< HEAD
                             <td>Kael</td>
-=======
-                            <td>Briet</td>
->>>>>>> 109b6418315cc4bfbd10f8abe5ed376416f2381c
                             
                                 <td class="points">24</td>
                                 <td class="result">
@@ -2750,479 +2333,6 @@
                                 </td>
                             
                             <td class="total-points">24</td>
-<<<<<<< HEAD
-=======
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="25">
-                                25
-                                
-                            </td>
-                            
-                            <td>Claudio</td>
-                            
-                                <td class="points">24</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">24</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="26">
-                                26
-                                
-                            </td>
-                            
-                            <td>Danilo</td>
-                            
-                                <td class="points">24</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">24</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="27">
-                                27
-                                
-                            </td>
-                            
-                            <td>Dante</td>
-                            
-                                <td class="points">24</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">24</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="28">
-                                28
-                                
-                            </td>
-                            
-                            <td>Guilherme C</td>
-                            
-                                <td class="points">24</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">24</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="29">
-                                29
-                                
-                            </td>
-                            
-                            <td>Kael</td>
-                            
-                                <td class="points">24</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">24</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="30">
-                                30
-                                
-                            </td>
-                            
-                            <td>Matheus</td>
-                            
-                                <td class="points">24</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">24</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="31">
-                                31
-                                
-                            </td>
-                            
-                            <td>Pablo</td>
-                            
-                                <td class="points">24</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">24</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="32">
-                                32
-                                
-                            </td>
-                            
-                            <td>Salomão</td>
-                            
-                                <td class="points">24</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">24</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="33">
-                                33
-                                
-                            </td>
-                            
-                            <td>Silverinho</td>
-                            
-                                <td class="points">24</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">24</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="rank" data-sort="34">
-                                34
-                                
-                            </td>
-                            
-                            <td>Willian</td>
-                            
-                                <td class="points">24</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                                <td class="points">0</td>
-                                <td class="result">
-                                    
-                                    
-                                        --
-                                    
-                                    <span class="wod-cat">(--)</span>
-                                </td>
-                            
-                            <td class="total-points">24</td>
->>>>>>> 109b6418315cc4bfbd10f8abe5ed376416f2381c
                         </tr>
                          
                     </tbody>
@@ -3231,11 +2341,7 @@
          
         
         <div class="footer-container">
-<<<<<<< HEAD
-            <p class="last-updated">Última atualização: 20/10/2025 09:36:44</p>
-=======
-            <p class="last-updated">Última atualização: 17/10/2025 21:00:40</p>
->>>>>>> 109b6418315cc4bfbd10f8abe5ed376416f2381c
+            <p class="last-updated">Última atualização: 20/10/2025 09:42:19</p>
             <p class="signature">By: Lucas Pereira</p>
         </div>
 
