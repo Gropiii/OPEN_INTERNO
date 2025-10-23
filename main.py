@@ -53,7 +53,6 @@ for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
             penalty_score = len(df_wod_participantes) + 1
             
             df_wod_participantes.rename(columns={resultado_col: 'Resultado', categoria_col: 'Categoria_WOD'}, inplace=True)
-            # Define 'ADP' como padrão se a categoria estiver vazia (em vez de 'SC')
             df_wod_participantes['Categoria_WOD'].fillna('ADP', inplace=True) 
             df_wod_participantes['Categoria_WOD'] = df_wod_participantes['Categoria_WOD'].astype(str)
             
@@ -65,42 +64,26 @@ for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
             else:
                 df_wod_participantes['Resultado_Num'] = df_wod_participantes['Resultado']
 
-            # --- ### INÍCIO DA ATUALIZAÇÃO PARA 4 CATEGORIAS ### ---
-
-            # 1. Separa os participantes em quatro grupos: RX, INT, SC e ADP.
-            # A função .str.strip() remove espaços extras antes de comparar.
+            # Lógica de 4 categorias: RX > INT > SC > ADP.
             rx_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.strip().str.lower() == 'rx'].copy()
             int_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.strip().str.lower() == 'int'].copy()
             sc_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.strip().str.lower() == 'sc'].copy()
-            adp_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.strip().str.lower() == 'adp'].copy() # NOVO: Grupo Adaptado
+            adp_results = df_wod_participantes[df_wod_participantes['Categoria_WOD'].str.strip().str.lower() == 'adp'].copy()
 
-            # 2. Rankeia cada grupo individualmente.
             rx_results[pontos_col] = rx_results['Resultado_Num'].rank(method='min', ascending=is_time)
             int_results[pontos_col] = int_results['Resultado_Num'].rank(method='min', ascending=is_time)
             sc_results[pontos_col] = sc_results['Resultado_Num'].rank(method='min', ascending=is_time)
-            adp_results[pontos_col] = adp_results['Resultado_Num'].rank(method='min', ascending=is_time) # NOVO: Ranking Adaptado
+            adp_results[pontos_col] = adp_results['Resultado_Num'].rank(method='min', ascending=is_time)
             
-            # 3. Aplica os "offsets" para criar a hierarquia RX > INT > SC > ADP.
             rx_count = len(rx_results)
             int_count = len(int_results)
-            sc_count = len(sc_results) # NOVO: Conta atletas Scale
+            sc_count = len(sc_results)
 
-            # Adiciona o número de atletas RX à pontuação dos atletas INT.
-            if rx_count > 0:
-                int_results[pontos_col] = int_results[pontos_col] + rx_count
-            
-            # Adiciona o número de atletas RX e INT à pontuação dos atletas SC.
-            if rx_count > 0 or int_count > 0:
-                sc_results[pontos_col] = sc_results[pontos_col] + rx_count + int_count
+            if rx_count > 0: int_results[pontos_col] = int_results[pontos_col] + rx_count
+            if rx_count > 0 or int_count > 0: sc_results[pontos_col] = sc_results[pontos_col] + rx_count + int_count
+            if rx_count > 0 or int_count > 0 or sc_count > 0: adp_results[pontos_col] = adp_results[pontos_col] + rx_count + int_count + sc_count
 
-            # Adiciona o número de atletas RX, INT e SC à pontuação dos atletas ADP.
-            if rx_count > 0 or int_count > 0 or sc_count > 0:
-                 adp_results[pontos_col] = adp_results[pontos_col] + rx_count + int_count + sc_count # NOVO: Offset Adaptado
-
-            # 4. Junta os quatro grupos rankeados em um único DataFrame.
-            df_wod_ranked = pd.concat([rx_results, int_results, sc_results, adp_results]) # NOVO: Adiciona Adaptado
-            
-            # --- ### FIM DA ATUALIZAÇÃO ### ---
+            df_wod_ranked = pd.concat([rx_results, int_results, sc_results, adp_results])
 
         # Junta os dados rankeados de volta na lista COMPLETA de atletas.
         df_leaderboard = pd.merge(df_leaderboard, df_wod_ranked[['Atleta', 'Resultado', 'Categoria_WOD', pontos_col]], on='Atleta', how='left')
@@ -119,29 +102,53 @@ for category_name, df_category_raw in df_raw.groupby('Categoria_Geral'):
     
     # Lógica de desempate em cascata.
     max_placements = len(df_leaderboard)
+    placement_cols = [] # Guarda os nomes das colunas de colocação
     for i in range(1, max_placements + 1):
         placement_col_name = f'placements_{i}'
         df_leaderboard[placement_col_name] = (df_leaderboard[pontos_cols] == i).sum(axis=1)
+        placement_cols.append(placement_col_name)
 
-    sort_by_columns = ['Total Pontos']
-    sort_ascending_order = [True]
+    # --- ### INÍCIO DA CORREÇÃO DEFINITIVA ### ---
+    # Define as colunas que definem um EMPATE REAL (sem incluir o nome do atleta).
+    tie_breaking_columns = ['Total Pontos'] + placement_cols
+    
+    # Cria a lista completa de critérios para a ORDENAÇÃO (incluindo o nome para desempate final).
+    sort_by_columns = tie_breaking_columns + ['Atleta']
+    sort_ascending_order = [True] + [False] * len(placement_cols) + [True]
 
-    for i in range(1, max_placements + 1):
-        placement_col_name = f'placements_{i}'
-        sort_by_columns.append(placement_col_name)
-        sort_ascending_order.append(False)
-        
-    sort_by_columns.append('Atleta')
-    sort_ascending_order.append(True)
-
+    # Aplica a ordenação multi-critério para resolver todos os empates.
     df_classificado = df_leaderboard.sort_values(
         by=sort_by_columns,
         ascending=sort_ascending_order
-    )
-    
-    # Adiciona a coluna de Rank final.
-    df_classificado['Rank'] = range(1, len(df_classificado) + 1)
-    
+    ).reset_index(drop=True)
+
+    # Lógica de Ranking Compartilhado Corrigida
+    ranks = []
+    current_rank = 0
+    tie_count = 0
+    previous_tie_values = None
+
+    for index, row in df_classificado.iterrows():
+        # Pega os valores APENAS das colunas que definem o empate real.
+        current_tie_values = tuple(row[tie_breaking_columns])
+
+        # Se for a primeira linha ou se os valores de EMPATE forem DIFERENTES da linha anterior...
+        if previous_tie_values is None or current_tie_values != previous_tie_values:
+            # ...calcula o novo rank pulando os lugares ocupados pelo empate anterior.
+            current_rank += tie_count + 1
+            tie_count = 0 # Reseta a contagem de empates.
+        else:
+            # Se os valores de EMPATE forem IGUAIS, incrementa a contagem de empates.
+            tie_count += 1
+        
+        ranks.append(current_rank)
+        # Guarda os valores de EMPATE desta linha para comparar com a próxima.
+        previous_tie_values = current_tie_values
+
+    # Adiciona a coluna 'Rank' ao DataFrame com os valores calculados.
+    df_classificado['Rank'] = ranks
+    # --- ### FIM DA CORREÇÃO DEFINITIVA ### ---
+
     # Guarda os dados processados da categoria no dicionário principal.
     all_categories_data[category_name] = df_classificado.to_dict(orient='records')
 
@@ -160,4 +167,4 @@ html_gerado = template.render(
 with open('index.html', 'w', encoding='utf-8') as f:
     f.write(html_gerado)
 
-print(f"Tabela gerada com sucesso com 4 categorias (RX, INT, SC, ADP)!")
+print(f"Tabela gerada com sucesso!")
